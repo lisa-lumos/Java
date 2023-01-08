@@ -69,7 +69,7 @@ There are 8 of them:
 
 Class allows us to build custom datatypes. Integer is a wrapper class (Java uses wrapper class for all 8 of its primitive data types). 
 
-An integer wraparound event (overflow/underflow) can occur in Java when you are using expressions that are not a simple literal value. The Java compiler doesn't attempt to evaluate the expression to determine its value,  so it DOES NOT give you an error. 
+An integer wraparound event (overflow/underflow) can occur in Java when you are using expressions that are not a simple literal value. The Java compiler doesn't attempt to evaluate the expression to determine its value,  so it DOES NOT give you an error. Integer wraparound happens to byte, short, int, long data types. 
 
 To improve readability, Java allow to have underscore in a numeric literal, like `2_147_483_647`. 
 
@@ -103,11 +103,39 @@ jshell> int myVal = 2_147_483_647;
 myVal ==> 2147483647
 ```
 
+Width of numeric datatypes: 
+```java
+jshell> System.out.print("Byte value Range: " + Byte.MIN_VALUE + " to " + Byte.MAX_VALUE); // width: 8 bits
+Byte value Range: -128 to 127
 
+jshell> System.out.print("Short value Range: " + Short.MIN_VALUE + " to " + Short.MAX_VALUE); // width: 16 bits
+Short value Range: -32768 to 32767
 
+jshell> System.out.print("Integer value Range: " + Integer.MIN_VALUE + " to " + Integer.MAX_VALUE); // width: 32 bits
+Integer value Range: -2147483648 to 2147483647
 
+jshell> System.out.print("Long value Range: " + Long.MIN_VALUE + " to " + Long.MAX_VALUE); // width: 64 bits
+Long value Range: -9223372036854775808 to 9223372036854775807
 
+jshell> System.out.print("A long has a width of: " + Long.SIZE); // return size of a type
+A long has a width of: 64
 
+jshell> long myVal = 2_147_483_647; // max of int
+myVal ==> 2147483647
+
+jshell> long myVal = 2_147_483_647_123; // exceeds max of int
+|  Error:
+|  integer number too large
+|  long myVal = 2_147_483_647_123;
+|               ^
+
+jshell> long myVal = 2_147_483_647_123L; // now use the L suffix
+myVal ==> 2147483647123
+```
+
+Note that in Java, the number 100 is an int by default. To indicate this is a different data type, need suffix such as `long myVal = 100L;`, so it is now a long type. Recommend uppercase as suffix so it is clear. A numeric literal that exceeds Integer.MAX_VALUE must use the L suffix. You cannot assign a literal that is larger than what that datatype can hold, will return an error. 
+
+## Casting in Java
 
 
 

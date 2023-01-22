@@ -234,15 +234,28 @@ Why double? because modern computers at the chip level processes double numbers 
 Note that when precise calculations are required, you should use BigDecimal class, not the float or double. 
 
 ## The char and boolean primitive data types
+A char occupies 2 bytes, so has a width of 16 bits. It is stored as a 2 byte number which maps to a single char in Java.  
 
+Java supports using a unicode value to set a char value. Refer to `www.unicode-table.com` for unicode for different characters. 
+```java
+jshell> char myChar = 'D';
+myChar ==> 'D'
 
+jshell> char myUnicodeChar = '\u0044';
+myUnicodeChar ==> 'D'
 
+jshell> char myDecimalCodeChar = 68;
+myDecimalCodeChar ==> 'D'
+```
 
+It is best practice to create a boolean var name that seems to ask a question, such as isCustomerOver21, hasValidLicense, isMarried, etc. 
+```java
+jshell> boolean myTrueBooleanValue = true;
+myTrueBooleanValue ==> true
 
-
-
-
-
+jshell> boolean myFalseBooleanValue = false;
+myFalseBooleanValue ==> false
+```
 
 
 

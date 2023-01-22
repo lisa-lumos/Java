@@ -136,6 +136,115 @@ myVal ==> 2147483647123
 Note that in Java, the number 100 is an int by default. To indicate this is a different data type, need suffix such as `long myVal = 100L;`, so it is now a long type. Recommend uppercase as suffix so it is clear. A numeric literal that exceeds Integer.MAX_VALUE must use the L suffix. You cannot assign a literal that is larger than what that datatype can hold, will return an error. 
 
 ## Casting in Java
+```java
+jshell> short myMinShortValue = Short.MIN_VALUE; int myMinIntValue = Integer.MIN_VALUE;
+myMinShortValue ==> -32768
+myMinIntValue ==> -2147483648
+
+jshell> byte myMinByteValue = Byte.MIN_VALUE, myMaxByteValue = Byte.MAX_VALUE;
+myMinByteValue ==> -128
+myMaxByteValue ==> 127
+ 
+jshell> int myTotal = myMinIntValue / 2; 
+myTotal ==> -1073741824
+
+jshell> byte myNewByteValue = myMinByteValue / 2; // will not evaluate a variable
+|  Error:
+|  incompatible types: possible lossy conversion from int to byte
+|  byte myNewByteValue = myMinByteValue / 2;
+|                        ^----------------^
+
+jshell> byte myNewByteValue = -128 / 2; // literal value can be evaluated and checked for overflow
+myNewByteValue ==> -64
+
+jshell> byte myNewByteValue = (byte) (myMinByteValue / 2); // use caste, instead of the default int
+myNewByteValue ==> -64
+
+```
+
+Advice: always use an integer, unless you have a really good reason to not use it. 
+
+## Float and Double primitives
+The `double` is `Java's default type` for any decimal or real number literal, so the "d" suffix is optional. The float suffix "f" is required if you are assigning a literal to a float variable type. 
+
+float type has 32 bits, with a range of 1.4e-45 to 3.4028235e38.
+
+double type has 64 bits, with a range of 4.9e-324 to 1.7976931348623157e308. 
+
+Advice: always use a double, unless you have a really good reason to use float. 
+
+```java
+jshell> System.out.print("Float value range: " + Float.MIN_VALUE + " to " + Float.MAX_VALUE);
+Float value range: 1.4E-45 to 3.4028235E38
+jshell> System.out.print("Double value range: " + Double.MIN_VALUE + " to " + Double.MAX_VALUE);
+Double value range: 4.9E-324 to 1.7976931348623157E308
+jshell> int myIntValue = 5; float myFloatValue = 5; double myDoubleValue = 5; // you can assign int values to float or double data types with no issue
+myIntValue ==> 5
+myFloatValue ==> 5.0
+myDoubleValue ==> 5.0
+
+jshell> myFloatValue = 5f; myDoubleValue = 5d; // considered best practice
+myFloatValue ==> 5.0
+myDoubleValue ==> 5.0
+
+jshell> float myOtherFloatValue = 5.25; // 5.25 as a double cannot be assigned to float
+|  Error:
+|  incompatible types: possible lossy conversion from double to float
+|  float myOtherFloatValue = 5.25;
+|                            ^--^
+
+jshell> float myOtherFloatValue = 5.25f; // recommended
+myOtherFloatValue ==> 5.25
+
+jshell> float myOtherFloatValue = (float) 5.25; // not recommended
+myOtherFloatValue ==> 5.25
+
+jshell> myIntValue = 5 /2 ;
+myIntValue ==> 2
+
+jshell> myFloatValue = 5f / 2f;
+myFloatValue ==> 2.5
+
+jshell> myDoubleValue = 5d / 2d;
+myDoubleValue ==> 2.5
+
+jshell> myFloatValue = 5f / 3f; // 7 decimal places (the value stored in memory is actually more precise than the output which stops at 7 decimals)
+myFloatValue ==> 1.6666666
+
+jshell> myDoubleValue = 5d / 3d;
+myDoubleValue ==> 1.6666666666666667 // 16 decimal places (the value stored in memory is actually more precise than the output which stops at 16 decimals)
+
+jshell> myDoubleValue = 5.0 / 3.0;
+myDoubleValue ==> 1.6666666666666667
+
+jshell> myDoubleValue = 5.0 / 3;
+myDoubleValue ==> 1.6666666666666667
+
+
+jshell> myFloatValue = 5.0 / 3f; // the result is double because 5.0 is default double. 
+|  Error:
+|  incompatible types: possible lossy conversion from double to float
+|  myFloatValue = 5.0 / 3f;
+|                 ^------^
+
+```
+
+Why double? because modern computers at the chip level processes double numbers faster than its equivalent float. Also, math functions in java libraries are often written to process doubles and return double. 
+
+Note that when precise calculations are required, you should use BigDecimal class, not the float or double. 
+
+## The char and boolean primitive data types
+
+
+
+
+
+
+
+
+
+
+
 
 
 

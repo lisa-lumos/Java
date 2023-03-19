@@ -4,8 +4,6 @@ To print out Hello World in JShell:
 ```java
 jshell> System.out.print("Hello World"); // string literal
 Hello World
-jshell> System.out.print("Hello Round!");
-Hello Round!
 ```
 
 ## Variables
@@ -50,7 +48,7 @@ my2ndNum ==> 12
 jshell> int my3rdNum = 6;
 my3rdNum ==> 6
 
-jshell> /var
+jshell> /var // shows the vars created in current session
 |    int my1stNum = 35
 |    int my2ndNum = 12
 |    int my3rdNum = 6
@@ -58,7 +56,6 @@ jshell> /var
 jshell> int myTotal = my1stNum + my2ndNum + my3rdNum;
 myTotal ==> 53
 ```
-Note that `/var` shows you the vars created in current session. 
 
 ## Primitive Types
 There are 8 of them: 
@@ -67,7 +64,7 @@ There are 8 of them:
 - char
 - boolean
 
-Class allows us to build custom datatypes. Integer is a wrapper class (Java uses wrapper class for all 8 of its primitive data types). 
+Class allows us to build custom datatype (classes). Integer is a wrapper class (each of the 8 primitive data types has a wrapper class). 
 
 An integer wraparound event (overflow/underflow) can occur in Java when you are using expressions that are not a simple literal value. The Java compiler doesn't attempt to evaluate the expression to determine its value,  so it DOES NOT give you an error. Integer wraparound happens to byte, short, int, long data types. 
 
@@ -183,7 +180,7 @@ myIntValue ==> 5
 myFloatValue ==> 5.0
 myDoubleValue ==> 5.0
 
-jshell> myFloatValue = 5f; myDoubleValue = 5d; // considered best practice
+jshell> myFloatValue = 5f; myDoubleValue = 5d; // considered as best practice
 myFloatValue ==> 5.0
 myDoubleValue ==> 5.0
 
@@ -231,7 +228,7 @@ jshell> myFloatValue = 5.0 / 3f; // the result is double because 5.0 is default 
 
 Why double? because modern computers at the chip level processes double numbers faster than its equivalent float. Also, math functions in java libraries are often written to process doubles and return double. 
 
-Note that when precise calculations are required, you should use BigDecimal class, not the float or double. 
+Note that when precise calculations are required, such as for currency, you should use BigDecimal class, not the float or double. 
 
 ## The char and boolean primitive data types
 A char occupies 2 bytes, so has a width of 16 bits. It is stored as a 2 byte number which maps to a single char in Java.  
@@ -257,7 +254,31 @@ jshell> boolean myFalseBooleanValue = false;
 myFalseBooleanValue ==> false
 ```
 
+## String
+The String class a special class, you can use it like a primitive datatype. 
+```java
+jshell> String myStr = "This is a string";
+myStr ==> "This is a string"
 
+jshell> System.out.println("myStr = " + myStr); 
+myStr = This is a string
 
+jshell> myStr = myStr + ", and more"; // concatenation operator
+myStr ==> "This is a string, and more"
+
+jshell> myStr = "I wish I had \u00241,000. "; // can use unicode char in str, because keyboard do not have all symbols. 
+myStr ==> "I wish I had $1,000. "
+
+jshell> myStr = 50 + "Hello";
+myStr ==> "50Hello"
+
+jshell> myStr = "Hello" + 50;
+myStr ==> "Hello50"
+
+```
+
+To execute multiple statements in JShell: put your statement on a single line, or enclose your statements in a pair of curly braces {}. 
+
+A String is immutable - you cannot change a string after it is created. During concatenation, a new string is created automatically, which is inefficient. StringBuilder class is more efficient. 
 
 

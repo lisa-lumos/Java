@@ -281,4 +281,69 @@ To execute multiple statements in JShell: put your statement on a single line, o
 
 A String is immutable - you cannot change a string after it is created. During concatenation, a new string is created automatically, which is inefficient. StringBuilder class is more efficient. 
 
+## Operators
+Operators manipulates operands. 
+```java
+jshell> char firstChar = 'A'; char secondChar = 'B';
+firstChar ==> 'A'
+secondChar ==> 'B'
+
+jshell> System.out.println(firstChar + secondChar); // because chars are stored as 2 byte numbers in memory. When you use plus operator with chars, it is these numbers in memory that get added together. 65+66. If you want to get AB, concatenate them as strings, or concatenate them to a empty string (because any plus after a String is going to be a concatenation operator)
+131
+
+jshell> System.out.println("" + firstChar + secondChar);
+AB
+
+jshell> int result = 5 % 3; // modulo
+result ==> 2
+
+jshell> result++; // postfix increment operator
+$12 ==> 2
+
+jshell> System.out.println(result);
+3
+
+jshell> result += 1; // compound assignment operator. Note that x -= y is essentially x = (datatype of x) (x - y), which includes an implicit cast. 
+$14 ==> 4
+
+jshell> System.out.println(result);
+4
+```
+
+
+
+## Comments
+```java
+int val = 1 + 2; // This is a comment
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

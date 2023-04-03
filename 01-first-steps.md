@@ -310,8 +310,6 @@ jshell> System.out.println(result);
 4
 ```
 
-
-
 ## Comments
 ```java
 int val = 1 + 2; // This is a comment

@@ -40,12 +40,16 @@ Hello World!
 Process finished with exit code 0
 ```
 
+## Ternary/Conditional operator
+`operand1 ? operand2 : operand3` - if operand1 evaluates to true, then return operand2, otherwise return operand3. It is a shortcut of the if-then-else statement. 
 
+```java
+String makeOfCar = "Ford";
+String conclusion = (makeOfCar.equals("Ford")) ? "is domestic" : "is not domestic"; // parenthesis makes it more readable
+System.out.println(conclusion); // "is domestic"
+```
 
-
-
-
-
+In IntelliJ, double click a editor tab expand/collapse the File Explorer. 
 
 
 

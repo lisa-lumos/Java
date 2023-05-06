@@ -47,12 +47,38 @@ Java doesn't support default values for parameters in a method.
 
 In IntelliJ, you can `compare two files` by right clicking a file in the Project folder, then select "Compare With...". With two class files side by side, you can also sync differences of two file by clicking the arrows at each difference. 
 
-You can also see c`ode history in the IntelliJ`, by right-click the file in the Project folder, and click "Local History". This again compares an older version you select, and allow you to compare side by side, and you can revert by clicking the arrows near the line numbers. You can also revert to an old version in one click by right click on that version, then "Revert". 
+You can also see `code history in the IntelliJ`, by right-click the file in the Project folder, and click "Local History". This again compares an older version you select, and allow you to compare side by side, and you can revert by clicking the arrows near the line numbers. You can also revert to an old version in one click by right click on that version, then "Revert". 
 
+## Method overloading
+When a class has many methods with the same name, but with different signatures (num & order & datatype of params). Return type is not included. 
+```java
+public class Main {
 
+    public static void main(String[] args) {
 
+        System.out.println("New score is " + calculateScore("Tim", 500));
+        System.out.println("New score is " + calculateScore(10));
+    }
 
+    public static int calculateScore(String playerName, int score) {
 
+        System.out.println("Player " + playerName + " scored " + score + " points");
+        return score * 1000;
+    }
+
+    public static int calculateScore(int score) {
+
+        return calculateScore("Anonymous", score);
+    }
+
+    public static int calculateScore() {
+
+        System.out.println("No player name, no player score.");
+        return 0;
+    }
+}
+
+```
 
 
 

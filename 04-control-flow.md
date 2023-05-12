@@ -109,14 +109,62 @@ public class Main {
 
 ```
 
-## the while statement
+## the while & do while statement
+```java
+public class Main {
 
+    public static void main(String[] args) {
+
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(i);
+        }
+
+        int j = 1;
+        boolean isReady = false;
+        do {
+            if (j > 5) {
+                break;
+            }
+            System.out.println(j);
+            j++;
+            isReady = (j > 0);
+        } while (isReady);
+
+        int number = 0;
+        while (number < 50) {
+            number += 5;
+            if (number % 25 == 0) {
+                continue;
+            }
+            System.out.print(number + "_");
+        }
+    }
+}
+```
 
 ## Local variables and Scope
+A local variable is only available for use by the code block in which it was declared. It is also available to nested blocks of this code block. 
 
+Scope describes the accessibility of a variable. 
+
+Best practices:
+- Declare and initialize variables in the same place if possible
+- Declare variables in the narrowest scope possible
+
+Special case: In a switch statement, a variable declared in one case block (block A) can be accessed in other case blocks that are after the block A. 
 
 ## The class, object, static & instance fields and methods
+A class is a custom data type, and a special code block that contains instance variables and methods. A class is a blueprint of objects. An object is an instance of a particular class. The most common way to create an object is the new keyword. 
+```java
+String s = "Hello";
+String s = new String("Hello"); // equivalent to above
+```
 
+- A static field (declare with `static`) in a class is only stored in one place, and not copied down to its objects. eg: `Integer.MAX_VALUE`. 
+- A instance field is when the static keyword is not used in the class. Its value is allocated and initiated only when objects are created. Access it by object_name.var_name.
+
+- Static method (declared with `static`): accessed by class_name.method_name. eg: `Integer.parseInt("123")`
+- Instance method: accessed by object_name.method_name
 
 ## Parsing values and reading input using System.console()
 

@@ -48,14 +48,20 @@ public class Car {
 }
 ```
 
+Fields on classes are assigned default values automatically by Java:
+- boolean: false
+- byte/short/int/long/char: 0
+- double/float: 0.0
+- other types: null
 
+## Getters and Setters
+Getter: a method on a class, that retrieves the value of a private field, and returns it. Can validate data, etc. 
 
+Setter: a method on a class, that sets the value of a private field. Can render a private field. 
 
+The purpose of these methods is to control/protect access to private fields. 
 
-
-
-
-
+Getter and setter are part of car's public interface. Code -> Generate... in intelliJ can create new getter/setter methods for you. Note that for a boolean field, the getter should be isBlabla. 
 
 
 

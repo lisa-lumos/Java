@@ -61,7 +61,153 @@ Setter: a method on a class, that sets the value of a private field. Can render 
 
 The purpose of these methods is to control/protect access to private fields. 
 
-Getter and setter are part of car's public interface. Code -> Generate... in intelliJ can create new getter/setter methods for you. Note that for a boolean field, the getter should be isBlabla. 
+Getter and setter are part of car's public interface. Code -> Generate... in intelliJ can create new getter/setter methods for you. Note that for a boolean field, the getter should be is... . 
+
+This provides encapsulation of the internals of the class, and supports maintenance of a public interface that doesn't have to change, even if the class might. 
+
+`this` refers to the instance that was created when the object was instantiated. 
+
+An uninitialized variable such as `Car myCar;` causes a compile time error, but a variable with a null reference such as `Car myCar = null` can be used in code, without compiler errors, but will throw an exception at runtime. 
+
+This is a ugly code that is painful to set data. 
+
+Car.java
+```java
+public class Car {
+
+    private String make = "Tesla";
+    private String model = "Model X";
+    private String color = "Gray";
+    private int doors = 2;
+    private boolean convertible = true;
+
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getDoors() {
+        return doors;
+    }
+
+    public boolean isConvertible() {
+        return convertible;
+    }
+
+    public void setMake(String make) {
+
+        if (make == null) make = "Unknown";
+        String lowercaseMake = make.toLowerCase();
+        switch (lowercaseMake) {
+            case "holden", "porsche", "tesla" -> this.make = make;
+            default -> {
+                this.make = "Unsupported ";
+            }
+        }
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setDoors(int doors) {
+        this.doors = doors;
+    }
+
+    public void setConvertible(boolean convertible) {
+        this.convertible = convertible;
+    }
+
+    public void describeCar() {
+
+        System.out.println(doors + "-Door " +
+                color + " " +
+                make + " " +
+                model + " " +
+                (convertible ? "Convertible" : ""));
+    }
+}
+```
+
+Main.java
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        Car car = new Car();
+        car.setMake("Porsche");
+        car.setModel("Carrera");
+        car.setDoors(2);
+        car.setConvertible(true);
+        car.setColor("black");
+        System.out.println("make = " + car.getMake());
+        System.out.println("model = " + car.getModel());
+        car.describeCar();
+
+        Car targa = new Car();
+        targa.setMake("Porsche");
+        targa.setModel("Targa");
+        targa.setDoors(2);
+        targa.setConvertible(false);
+        targa.setColor("red");
+
+        targa.describeCar();
+    }
+}
+
+```
+
+## Constructors
+
+
+
+## Static vs Instance variables/methods
+
+
+
+## POJO
+
+
+
+## Inheritance
+
+
+
+## Composition
+
+
+
+## Encapsulation
+
+
+
+## Polymorphism
+
+
+
+
+
+## Organizing Java Classes, Packages and Import Statements
+
+
+
+
+
+
+
+
 
 
 

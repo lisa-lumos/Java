@@ -170,8 +170,158 @@ public class Main {
 ```
 
 ## Constructors
+Used for creating an object. It has the same name as the class, is like a method, and doesn't return any values, not even void. 
 
+By default, if no explicit constructors are declared, a constructor is already created for you, implicitly by Java. When you use `new Account()` to create an Account object, it is calling the implicit constructor. 
 
+If there is an explicit constructor, then the default is not implicitly declared. 
+
+A class can have one or many constructors - constructor overloading. 
+
+It is common practice to make the parameter names to be same as the instance field names, but it is not required. 
+
+Constructor chaining: one constructor explicitly calls another overloaded constructor. Use `this(...); ` as the first statement from this constructor. 
+
+The general rule is, it is always better, to assign the values directly to the field in the constructor, rather than calling the setter from a constructor. 
+
+In IntelliJ, put the cursor in the place to be inserted, Code -> Generate... -> Constructor, and select the fields you want to get included -> OK. 
+
+"Account.java":
+```java
+public class Account {
+
+    private String number;
+    private double balance;
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+
+    public Account() {
+        this("56789", 2.50, "Default name",
+                "Default address", "Default phone");
+        System.out.println("Empty constructor called");
+    }
+
+    public Account(String number, double balance, String customerName, String email,
+                   String phone) {
+        System.out.println("Account constructor with parameters called");
+        this.number = number;
+        this.balance = balance;
+        this.customerName = customerName;
+        customerEmail = email;
+        customerPhone = phone;
+    }
+
+    public Account(String customerName, String customerEmail, String customerPhone) {
+        this("99999", 100.55, customerName, customerEmail, customerPhone);
+//        this.customerName = customerName;
+//        this.customerEmail = customerEmail;
+//        this.customerPhone = customerPhone;
+    }
+
+    public void depositFunds(double depositAmount) {
+
+        balance += depositAmount;
+        System.out.println("Deposit of $" + depositAmount + " made. New balance is $" +
+                balance);
+    }
+
+    public void withdrawFunds(double withdrawalAmount) {
+
+        if (balance - withdrawalAmount < 0) {
+            System.out.println("Insufficient Funds! You only have $" + balance +
+                    " in your account.");
+        } else {
+            balance -= withdrawalAmount;
+            System.out.println("Withdrawal of $" + withdrawalAmount +
+                    " processed, Remaining balance = $" + balance);
+        }
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+}
+
+```
+
+"Main.java"
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+//        Account bobsAccount = new Account("12345", 500,
+//                "Bob Brown", "myemail@bob.com",
+//                "(087) 123-4567");
+
+        Account bobsAccount = new Account();
+
+        System.out.println(bobsAccount.getNumber());
+        System.out.println(bobsAccount.getBalance());
+
+//        bobsAccount.setNumber("12345");
+//        bobsAccount.setBalance(1000.00);
+//        bobsAccount.setCustomerName("Bob Brown");
+//        bobsAccount.setCustomerEmail("myemail@bob.com");
+//        bobsAccount.setCustomerPhone("(087) 123-4567");
+        
+        bobsAccount.withdrawFunds(100.0);
+        bobsAccount.depositFunds(250);
+        bobsAccount.withdrawFunds(50);
+
+        bobsAccount.withdrawFunds(200);
+
+        bobsAccount.depositFunds(100);
+        bobsAccount.withdrawFunds(45.55);
+        bobsAccount.withdrawFunds(54.46);
+
+        bobsAccount.withdrawFunds(54.45);
+
+        Account timsAccount = new Account("Tim",
+                "tim@email.com", "12345");
+        System.out.println("AccountNo: " + timsAccount.getNumber() +
+                "; name " + timsAccount.getCustomerName());
+    }
+}
+
+```
 
 ## Static vs Instance variables/methods
 

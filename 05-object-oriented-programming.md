@@ -65,7 +65,7 @@ Getter and setter are part of car's public interface. Code -> Generate... in int
 
 This provides encapsulation of the internals of the class, and supports maintenance of a public interface that doesn't have to change, even if the class might. 
 
-`this` refers to the instance that was created when the object was instantiated. 
+`this` refers to the "current instance" that was created when the object was instantiated. 
 
 An uninitialized variable such as `Car myCar;` causes a compile time error, but a variable with a null reference such as `Car myCar = null` can be used in code, without compiler errors, but will throw an exception at runtime. 
 
@@ -324,8 +324,25 @@ public class Main {
 ```
 
 ## Static vs Instance variables/methods
+Each instance has its own copy of an instance variable. While all instances of a class share one static instance variable. 
 
+Best practice: Use the class name, not a reference variable, to access a static instance variable. 
 
+Static instance variables aren't used very often, but can be used for:
+- Storing counters. 
+- Generating unique ids. 
+- Storing a constant value, such as PI. 
+- Creating, controlling access to a shared resource (log file, db, IO stream, ...). 
+
+If constructors set values of static variables, then these values will be same as when the last time the constructor was called. So you shouldn't use them this way. 
+
+Static methods cannot access regular instance methods/variables directly. Used for operations that do not require any data from an instance of the class. This is why `main()` is static. 
+
+You can use the class name to access a static method. 
+
+Regular instance methods can access static methods/variables directly, without using `this` (but you can still use it of course, which helps with the clarity). 
+
+Best practice: if a method is not using any regular instance methods/variables, should consider making it static. 
 
 ## POJO
 

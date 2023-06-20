@@ -344,8 +344,104 @@ Regular instance methods can access static methods/variables directly, without u
 
 Best practice: if a method is not using any regular instance methods/variables, should consider making it static. 
 
-## POJO
+## POJO (Plain old Java object)
+POJO (bean/JavaBean) only has instance fields. Only has getter and setters as methods. Used to house/pass data between functional classes. Many database use POJOs to read/write data to/from databases/files/streams. 
 
+To create a toString() method for a class using IntelliJ: 
+Code -> Generate... -> toString(), and select all the fields -> OK. 
+
+Annotation, such as `@Override` is a type of metadata. More structured and detailed than comments. They can be used by the compiler to get info about the code. 
+
+In Main.java:
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        for (int i = 1; i <= 5; i++) {
+            Student s = new Student("S92300" + i,
+                    switch (i) {
+                        case 1 -> "Mary";
+                        case 2 -> "Carol";
+                        case 3 -> "Tim";
+                        case 4 -> "Harry";
+                        case 5 -> "Lisa";
+                        default -> "Anonymous";
+                    },
+                    "05/11/1985",
+                    "Java Masterclass");
+            System.out.println(s); // implicitly execute the toString() of the object
+        }
+    }
+}
+```
+
+In Student.java:
+```java
+public class Student {
+
+    private String id;
+    private String name;
+    private String dateOfBirth;
+    private String classList;
+
+    public Student(String id, String name, String dateOfBirth, String classList) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.classList = classList;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", classList='" + classList + '\'' +
+                '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getClassList() {
+        return classList;
+    }
+
+    public void setClassList(String classList) {
+        this.classList = classList;
+    }
+}
+```
+
+If you were reading data from a database, or a csv file, you could create a whole set of POJOs, to collect all the data elements, in all your records. Once you have all this information in the POJOs, you can pass these objects to whatever code would process it, perhaps generate a mailing list, etc.
+
+Even with code generation tool's help, this is still a lot of code. JDK 16 introduced a new type - the record, which does this for us. 
+
+### The Record
+Java's implicit POJO type. 
 
 
 ## Inheritance

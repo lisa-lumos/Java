@@ -440,8 +440,79 @@ If you were reading data from a database, or a csv file, you could create a whol
 
 Even with code generation tool's help, this is still a lot of code. JDK 16 introduced a new type - the record, which does this for us. 
 
+They are repetitive and follows certain rules. Once created this code is rarely modified. 
+
 ### The Record
-Java's implicit POJO type. 
+Java's implicit POJO type (plain data carriers). A special class that contains data, that is not meant to be altered. Contains only the most basic methods: constructors and accessors/getters. As the developer, you don't have to write this code. 
+
+In IntelliJ, in file explorer, right click the "src" folder -> New -> Java Class -> Record -> name it "LPAStudent". 
+
+For a Record, Java generates implicitly:
+- For each component in the record header, generates:
+  - a private and final field (component field), with the same name/type as the component
+  - a public accessor for it. e.g., id() for the field named as "id"
+- A toString() method for for the record. 
+
+"LPAStudent.java":
+```java
+public record LPAStudent(String id, String name, String dateOfBirth, String classList) { // parameter list (the record header)
+}
+```
+
+"Main.java":
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        for (int i = 1; i <= 5; i++) {
+            LPAStudent s = new LPAStudent("S92300" + i,
+                    switch (i) {
+                        case 1 -> "Mary";
+                        case 2 -> "Carol";
+                        case 3 -> "Tim";
+                        case 4 -> "Harry";
+                        case 5 -> "Lisa";
+                        default -> "Anonymous";
+                    },
+                    "05/11/1985",
+                    "Java Masterclass");
+            System.out.println(s);
+        }
+
+        Student pojoStudent = new Student("S923006", "Ann",
+                "05/11/1985", "Java Masterclass");
+        LPAStudent recordStudent = new LPAStudent("S923007", "Bill",
+                "05/11/1985", "Java Masterclass");
+
+        System.out.println(pojoStudent);
+        System.out.println(recordStudent);
+
+        pojoStudent.setClassList(pojoStudent.getClassList() + ", Java OCP Exam 829");
+//        recordStudent.setClassList(recordStudent.classList() + ", Java OCP Exam 829"); // record do not have setters, so they can be immutable. 
+
+        System.out.println(pojoStudent.getName() + " is taking " +
+                pojoStudent.getClassList());
+        System.out.println(recordStudent.name() + " is taking " +
+                recordStudent.classList());
+    }
+}
+
+```
+
+Why immutable? Because you want to protect the data from unintended mutations. 
+
+If you want to modify data on your class, you cannot use record - you should use POJO. But if you are reading records from a db or a file, and simply passing this data around, then the record class is helpful. 
+
+
+
+
+
+
+
+
+
+
 
 
 ## Inheritance

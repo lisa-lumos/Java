@@ -504,18 +504,144 @@ Why immutable? Because you want to protect the data from unintended mutations.
 
 If you want to modify data on your class, you cannot use record - you should use POJO. But if you are reading records from a db or a file, and simply passing this data around, then the record class is helpful. 
 
-
-
-
-
-
-
-
-
-
-
-
 ## Inheritance
+A form of code reuse. Organizes classes into a parent-child hierarchy, which lets the child inherit/reuse fields/methods from its parent. 
+
+In the hierarchy, the most generic/base class is at the top. Every class below it is a subclass. A parent can have multiple children. A child can only have one direct parent, but it inherits from all the way up to the base class. 
+
+A class diagram allows us to design the classes before building them. Such as:
+```mermaid
+classDiagram
+    Animal <|-- Dog
+
+    class Animal {
+        String type
+        String size
+        double weight
+        move(String speed)
+        makeNoise()
+    }
+
+    class Dog {
+        String earshape
+        String tailShape
+        bark()
+        run()
+        walk()
+        wagTail()
+    }
+
+```
+
+"Main.java":
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        Animal animal = new Animal("Generic Animal", "Huge", 400);
+        doAnimalStuff(animal, "slow");
+
+        Dog dog = new Dog();
+        doAnimalStuff(dog, "fast");
+    }
+
+    public static void doAnimalStuff(Animal animal, String speed) {
+
+        animal.makeNoise();
+        animal.move(speed);
+        System.out.println(animal);
+        System.out.println("_ _ _ _");
+    }
+}
+```
+
+"Animal.java":
+```java
+public class Animal {
+
+    private String type;
+    private String size;
+    private double weight;
+
+    public Animal() {
+
+    }
+
+    public Animal(String type, String size, double weight) {
+        // Code -> Generate... -> Constructor
+        this.type = type;
+        this.size = size;
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        // Code -> Generate... -> toString()
+        return "Animal{" +
+                "type='" + type + '\'' +
+                ", size='" + size + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
+
+    public void move(String speed) {
+        System.out.println(type + " moves " + speed);
+    }
+
+    public void makeNoise() {
+        System.out.println(type + " makes some kind of noise");
+    }
+}
+```
+
+"Dog.java":
+```java
+public class Dog extends Animal { // "extends" declares its parent class
+
+    public Dog() {
+        super("Mutt", "Big", 50); // calls the parent's constructor
+    }
+}
+
+```
+
+If we use `super(...)`, it needs to be the first statement of the constructor. If you do not use `super()`, then Java makes it for you using super's default constructor. If your super class doesn't have a default constructor, then you must explicitly call `super(...)` in all of your constructors, and pass the right arguments. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

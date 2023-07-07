@@ -608,16 +608,87 @@ public class Dog extends Animal { // "extends" declares its parent class
 
 If we use `super(...)`, it needs to be the first statement of the constructor. If you do not use `super()`, then Java makes it for you using super's default constructor. If your super class doesn't have a default constructor, then you must explicitly call `super(...)` in all of your constructors, and pass the right arguments. 
 
+Next, we can make the Dog to be different from Animal, by declaring its specific fields/methods. 
 
+"Dog.java":
+```java
+public class Dog extends Animal {
 
+    private String earShape;
+    private String tailShape;
 
+    public Dog() {
+        super("Mutt", "Big", 50);
+    }
+ 
+    public Dog(String type, double weight) {
+        this(type, weight, "Perky", "Curled"); // calls the other Dog constructor (constructor chaining)
+    }
 
+    // Code -> Generate -> Constructor -> pick a parent constructor -> pick Dog's specific fields
+    public Dog(String type, double weight, String earShape, String tailShape) {
+        super(type, 
+          weight <  15 ? "small" : (weight < 35 ? "medium" : "large"), // super needs to be the first statement, so has to do calc like this
+          weight
+        );
+        this.earShape = earShape;
+        this.tailShape = tailShape;
+    }
 
+    // Code -> Generate -> toString() -> Template: String concat and super.toString() -> Select two Dog attributes
+    @Override
+    public String toString() { // more specific than the Animal's toString(), so a Dog object use this toString()
+        return "Dog{" +
+                "earShape='" + earShape + '\'' +
+                ", tailShape='" + tailShape + '\'' +
+                "} " + super.toString(); // calls super class's methods
+    }
 
+    public void makeNoise() { // override the Animal's makeNoise()
 
+    }
 
+    // Code -> Override Methods -> pick the method to override
+    @Override
+    public void move(String speed) { 
+        super.move(speed);
+        System.out.println("Dogs walk, run and wag their tail");
+    }
+}
+```
 
+"Main.java":
+```java
+public class Main {
 
+    public static void main(String[] args) {
+
+        Animal animal = new Animal("Generic Animal", "Huge", 400);
+        doAnimalStuff(animal, "slow");
+
+        Dog dog = new Dog();
+        doAnimalStuff(dog, "fast");
+
+        Dog yorkie = new Dog("Yorkie", 15);
+        doAnimalStuff(yorkie, "fast");
+        Dog retriever = new Dog("Labrador Retriever", 65,
+                "Floppy", "Swimmer");
+        doAnimalStuff(retriever, "slow");
+    }
+
+    public static void doAnimalStuff(Animal animal, String speed) {
+
+        animal.makeNoise();
+        animal.move(speed);
+        System.out.println(animal);
+        System.out.println("_ _ _ _");
+    }
+}
+```
+
+Code re-use: All subclasses can execute methods declared in the parent class. So the code is not duplicated. 
+
+Overriding a method: when you create a method on a subclass, that has the same signature as the one in a super class. In IntelliJ, a blue circle with a red arrow near the line number indicates this is an override. 
 
 
 

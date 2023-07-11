@@ -690,21 +690,190 @@ Code re-use: All subclasses can execute methods declared in the parent class. So
 
 Overriding a method: when you create a method on a subclass, that has the same signature as the one in a super class. In IntelliJ, a blue circle with a red arrow near the line number indicates this is an override. 
 
+Next, we add dog specific methods to Dog. "Dog.java":
+```java
+public class Dog extends Animal {
 
+    private String earShape;
+    private String tailShape;
 
+    public Dog() {
+        super("Mutt", "Big", 50);
+    }
 
+    public Dog(String type, double weight) {
+        this(type, weight, "Perky", "Curled");
+    }
 
+    public Dog(String type, double weight, String earShape, String tailShape) {
+        super(type, weight <  15 ? "small" : (weight < 35 ? "medium" : "large"),
+                weight);
+        this.earShape = earShape;
+        this.tailShape = tailShape;
+    }
 
+    @Override
+    public String toString() {
+        return "Dog{" +
+                "earShape='" + earShape + '\'' +
+                ", tailShape='" + tailShape + '\'' +
+                "} " + super.toString();
+    }
 
+    public void makeNoise() { 
+        if (type == "Wolf") { // inherited "type" from super class
+            System.out.print("Ow Wooooo! ");
+        }
+        bark();
+        System.out.println();
+    }
 
+    @Override
+    public void move(String speed) {
+        super.move(speed);
+        if (speed == "slow") {
+            walk();
+            wagTail();
+        } else {
+            run();
+            bark();
+        }
+        System.out.println();
+    }
 
+    private void bark() { // private, because only called internally
+        System.out.print("Woof! ");
+    }
 
+    private void run() {
+        System.out.print("Dog Running ");
+    }
 
+    private void walk() {
+        System.out.print("Dog Walking ");
+    }
 
+    private void wagTail() {
+        System.out.print("Tail Wagging ");
+    }
+}
+```
 
+Note that if a field in the super class is private, then no other classes, not even its subclasses, can access/use this field. So "Animal.java":
+```java
+public class Animal {
 
+    protected String type; // so the subclasses and same package can access this field
+    private String size;
+    private double weight;
 
+    public Animal() {
 
+    }
+
+    public Animal(String type, String size, double weight) {
+        this.type = type;
+        this.size = size;
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "type='" + type + '\'' +
+                ", size='" + size + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
+
+    public void move(String speed) {
+        System.out.println(type + " moves " + speed);
+    }
+
+    public void makeNoise() {
+        System.out.println(type + " makes some kind of noise");
+    }
+}
+
+```
+
+"Fish.java": 
+```java
+public class Fish extends Animal {
+
+    private int gills;
+    private int fins;
+
+    public Fish(String type, double weight, int gills, int fins) {
+        super(type, "small", weight);
+        this.gills = gills;
+        this.fins = fins;
+    }
+
+    private void moveMuscles() {
+        System.out.print("muscles moving ");
+    }
+
+    private void moveBackFin() {
+        System.out.print("backfin moving ");
+    }
+
+    @Override
+    public void move(String speed) {
+        super.move(speed);
+        moveMuscles();
+        if (speed == "fast") {
+            moveBackFin();
+        }
+        System.out.println();
+    }
+
+    @Override
+    public String toString() {
+        return "Fish{" +
+                "gills=" + gills +
+                ", fins=" + fins +
+                "} " + super.toString();
+    }
+}
+
+```
+
+"Main.java":
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        Animal animal = new Animal("Generic Animal", "Huge", 400);
+        doAnimalStuff(animal, "slow");
+
+        Dog dog = new Dog();
+        doAnimalStuff(dog, "fast");
+
+        Dog yorkie = new Dog("Yorkie", 15);
+        doAnimalStuff(yorkie, "fast");
+        Dog retriever = new Dog("Labrador Retriever", 65,
+                "Floppy", "Swimmer");
+        doAnimalStuff(retriever, "slow");
+
+        Dog wolf = new Dog("Wolf", 40);
+        doAnimalStuff(wolf, "slow");
+
+        Fish goldie = new Fish("Goldfish", 0.25, 2, 3);
+        doAnimalStuff(goldie, "fast");
+    }
+
+    public static void doAnimalStuff(Animal animal, String speed) {
+        animal.makeNoise();
+        animal.move(speed);
+        System.out.println(animal);
+        System.out.println("_ _ _ _");
+    }
+}
+```
+
+Polymorphism. Example: Animal can take multiple forms, the base class Animal, or a Dog, or a Fish. It makes code simpler. The doAnimalStuff() method in main doesn't need to know what subclass type of the object it is. 
 
 
 

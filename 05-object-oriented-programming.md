@@ -875,15 +875,66 @@ public class Main {
 
 Polymorphism. Example: Animal can take multiple forms, the base class Animal, or a Dog, or a Fish. It makes code simpler. The doAnimalStuff() method in main doesn't need to know what subclass type of the object it is. 
 
+Every class in Java is implicitly a subclass of the java.lang.Object class, which is the root of the class hierarchy. It also means that all of your classes have functionalities built in them, that you can override, out of box. Such methods include clone(), equals(), toString(), etc. You can have `public class MyClass extends Object {...}`, but it is not necessary; if you select this `Object` in IntelliJ -> Go To -> Declaration or Usages -> and see the actual source code of this class. 
 
+In IntelliJ, any class can have this: Code -> Generate -> Override Methods -> See a selection of methods that you can override. 
 
+"Main.java":
+```java
+public class Main extends Object {
 
+    public static void main(String[] args) {
 
+        Student max = new Student("Max", 21);
+        System.out.println(max); // implicitly calls the toString() of the object
 
+        PrimarySchoolStudent jimmy = new PrimarySchoolStudent("Jimmy", 8,
+                "Carole");
+        System.out.println(jimmy);
+    }
+}
 
+class Student { //  Note that only one class in a java file can be made public. 
 
+    private String name;
+    private int age;
 
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
+//    @Override
+//    public String toString() {
+//        return super.toString(); // will return class name and hex code
+//    }
+
+    @Override
+    public String toString() { // use the "generate via wizard" in IntelliJ
+        return name + " is " + age;
+//        return "Student{" +
+//                "name='" + name + '\'' +
+//                ", age=" + age +
+//                '}';
+    }
+}
+
+class PrimarySchoolStudent extends Student {
+
+    private String parentName;
+
+    PrimarySchoolStudent(String name, int age, String parentName) {
+        super(name, age);
+        this.parentName = parentName;
+    }
+
+    @Override
+    public String toString() {
+        return parentName + "'s kid, " + super.toString();
+    }
+}
+
+```
 
 ## Composition
 

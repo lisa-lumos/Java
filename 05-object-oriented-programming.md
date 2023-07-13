@@ -936,6 +936,26 @@ class PrimarySchoolStudent extends Student {
 
 ```
 
+### `this` vs `super`
+`super` is for access/call the parent class vars/methods. 
+
+`this` is for access/call the current class vars/methods. 
+
+When an field has the same name, `this` is required. 
+
+You cannot use them for static elements in a class. 
+
+`this(...)` and `super(...)` are for constructor calls. When you use `this(...)` or `super(...)`in a constructor, it has to be the first line of this constructor, so you cannot have both of them in one constructor. 
+
+The best practice to create constructors is to have one constructor that takes the most variables, or use super(...), and have other simpler constructors to use it. Constructor chaining. 
+
+
+
+
+
+
+
+
 ## Composition
 
 

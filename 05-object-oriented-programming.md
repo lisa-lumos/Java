@@ -949,11 +949,20 @@ You cannot use them for static elements in a class.
 
 The best practice to create constructors is to have one constructor that takes the most variables, or use super(...), and have other simpler constructors to use it. Constructor chaining. 
 
+### Method Overloading vs Overriding
+Method overloading: 
+- Have many methods in a class, or overloaded by subclasses, with the same name, but different parameters. 
+- Can overload static/instance methods. 
+- To the code calling an overloaded method, it looks like a single method can be called, with different sets of arguments. 
+- Often referred to as "compile-time polymorphism". 
 
-
-
-
-
+Method overriding:
+- Defining a method in a child class, that already exists in the parent class, with the same signature (name and arguments). The return type can be same as, or a subclass of, the return type in the parent class, or covariant return type
+- Knowns as "runtime polymorphism", or "dynamic method dispatch"
+- Best practice: put `@override` immediately above the method definition. Though not required. If you do not properly override the method, it will get a compile error. (annotation)
+- Cannot override static methods, constructors, private methods, final methods. 
+- Cannot have more restrictive access privileges. 
+- Cannot throw a new/broader checked exception. 
 
 
 ## Composition

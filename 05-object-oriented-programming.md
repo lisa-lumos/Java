@@ -964,6 +964,52 @@ Method overriding:
 - Cannot have more restrictive access privileges. 
 - Cannot throw a new/broader checked exception. 
 
+### The Java Text Block, and formatting options
+A special format for multi-line String literals. Became part of the official language as of JDK 15. 
+
+"Main.java":
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        // this is ugly and hard to read
+        String bulletIt = "Print a Bulleted List:\n" +
+                "\t\u2022 First Point\n" + // u2022 is a bullet point character
+                "\t\t\u2022 Sub Point";
+
+        System.out.println(bulletIt);
+
+        // this produces same result as above, but easier to read
+        String textBlock = """
+                
+                Print a Bulleted List:
+                    \u2022 First Point
+                        \u2022 Sub Point""";
+
+        System.out.println(textBlock);
+
+        int age = 10;
+        System.out.printf("Your age is %d%n", age); // %n is same with \n
+
+        int yearOfBirth = 2023 - age;
+        System.out.printf("Age = %d, Birth year = %d%n", age, yearOfBirth);
+        System.out.printf("Your age is %.2f%n", (float) age);
+
+        for (int i = 1; i <= 100000; i *= 10) {
+            System.out.printf("Printing %6d %n", i); // set the width to 6
+        }
+
+        String formattedString = String.format("Your age is %d", age); // put this format into this string
+        System.out.println(formattedString);
+
+        formattedString = "Your age is %d".formatted(age); // included in jdk 15, works same as above
+        System.out.println(formattedString);
+    }
+}
+```
+
+
 
 ## Composition
 

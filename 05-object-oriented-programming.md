@@ -1077,8 +1077,69 @@ public class Main {
 
 ```
 
+String manipulation methods. 
+| method | description |
+|---|---|
+| indent | added in JDK 15. adds/removes spaces from the beginning of lines in multi-line text  |
+| strip/stripLeading/stripTrailing/trim | strip() supports a larger set of white space characters. stripLeading(), stripTrailing() was added in JDK 11 |
+| toLowerCase/toUpperCase | returns a new str in lower/upper case |
+| concat | simialr to + operator for strs |
+| join | concatenates many strings with the delimiter specified |
+| repeat | return the str repeated by num of times |
+| replace/replaceAll/replaceFirst | works as named |
+| substring/subSequence | return the substring as of specified range |
 
+"StringMethods.java":
+```java
+public class StringMethods {
 
+    public static void main(String[] args) {
+
+        String birthDate = "01/02/2010";
+        int startingIdxOfYear = birthDate.indexOf("2010"); // 6
+        System.out.println("startingIdxOfYear = " + startingIdxOfYear);
+        System.out.println("Birth year = " + birthDate.substring(startingIdxOfYear)); 
+        System.out.println("Month = " + birthDate.substring(3, 5)); // 01
+
+        String newDate = String.join("/", "07", "31", "2023");
+        System.out.println("newDate = " + newDate); // 07/31/2023
+        // the tedious alternative of join:
+        newDate = "07";
+        newDate = newDate.concat("/");
+        newDate = newDate.concat("31");
+        newDate = newDate.concat("/");
+        newDate = newDate.concat("2023");
+        System.out.println("newDate = " + newDate);
+        // another alternative of join:
+        newDate = "07" + "/" + "31" + "/" + "2023";
+        System.out.println("newDate = " + newDate);
+        // another alternative of join, using method chaining
+        newDate = "07".concat("/").concat("31").concat("/").concat("2023");
+        System.out.println("newDate = " + newDate);
+
+        // replace all occurrences of this char
+        System.out.println(newDate.replace('/', '-')); 
+        // replace all occurrences of this str
+        System.out.println(newDate.replace("2", "00")); 
+        // replace first occurrence of the regex str
+        System.out.println(newDate.replaceFirst("/", "-")); 
+        // replace all occurrences of the regex str
+        System.out.println(newDate.replaceAll("/", "---"));
+
+        System.out.println("ABC\n".repeat(3));
+        System.out.println("-".repeat(20));
+
+        System.out.println("ABC\n".repeat(3).indent(8)); // every line now has 8 spaces at the beginning
+        System.out.println("-".repeat(20));
+
+        System.out.println("    ABC\n".repeat(3).indent(-2)); // the indent now is 2, instead of 4
+        System.out.println("-".repeat(20));
+    }
+}
+
+```
+
+StringBuilder. 
 
 ## Composition
 

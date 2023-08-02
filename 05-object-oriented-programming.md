@@ -1083,7 +1083,7 @@ String manipulation methods.
 | indent | added in JDK 15. adds/removes spaces from the beginning of lines in multi-line text  |
 | strip/stripLeading/stripTrailing/trim | strip() supports a larger set of white space characters. stripLeading(), stripTrailing() was added in JDK 11 |
 | toLowerCase/toUpperCase | returns a new str in lower/upper case |
-| concat | simialr to + operator for strs |
+| concat | similar to + operator for strs |
 | join | concatenates many strings with the delimiter specified |
 | repeat | return the str repeated by num of times |
 | replace/replaceAll/replaceFirst | works as named |
@@ -1139,7 +1139,67 @@ public class StringMethods {
 
 ```
 
-StringBuilder. 
+StringBuilder. String is immutable, so Java provides mutable class StringBuilder. 
+
+"Main.java":
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        String helloWorld = "Hello" + " World";
+        helloWorld.concat(" and Goodbye"); // the returned str was never assigned to a var
+        printInformation(helloWorld);
+
+        StringBuilder helloWorldBuilder = new StringBuilder("Hello" + " World");
+        helloWorldBuilder.append(" and Goodbye"); // no need to assign the result
+        printInformation(helloWorldBuilder);
+
+        StringBuilder emptyStart = new StringBuilder();
+        emptyStart.append("a".repeat(57));
+
+        StringBuilder emptyStart32 = new StringBuilder(32); // give a starting capacity
+        emptyStart32.append("a".repeat(17));
+
+        printInformation(emptyStart);
+        printInformation(emptyStart32);
+
+        StringBuilder builderPlus = new StringBuilder("Hello" + " World");
+        builderPlus.append(" and Goodbye");
+
+        builderPlus.deleteCharAt(16).insert(16, 'g');
+        System.out.println(builderPlus); // Hello World and goodbye
+
+        builderPlus.replace(16, 17, "G");
+        System.out.println(builderPlus); // Hello World and Goodbye
+
+        builderPlus.reverse().setLength(7); 
+        System.out.println(builderPlus); // eybdooG
+    }
+
+    public static void printInformation(String string) {
+
+        System.out.println("String = " + string);
+        System.out.println("length = " + string.length());
+    }
+
+    public static void printInformation(StringBuilder builder) {
+
+        System.out.println("StringBuilder = " + builder);
+        System.out.println("length = " + builder.length());
+        System.out.println("capacity = " + builder.capacity());
+    }
+}
+
+```
+By default, an empty StringBuilder starts with a capacity of 16, before it needs to request more memory. Every time a StringBuilder needs to increase capacity, the data stored in the original storage needs to get copied over to a larger storage area. If you plan to house a long text value in a StringBuilder object, start out with a larger capacity. 
+
+| method | description |
+|---|---|
+| delete/deleteCharAt | delete a substr/char using specified indices  |
+| insert | insert text at a specified loc |
+| reverse | as named |
+| setLength | can be used to truncate the sequence, or include null sequences to fill out the sequence to that length |
 
 ## Composition
 

@@ -1202,7 +1202,7 @@ By default, an empty StringBuilder starts with a capacity of 16, before it needs
 | setLength | can be used to truncate the sequence, or include null sequences to fill out the sequence to that length |
 
 ## Composition
-Inheritance defines an "IS A" relationship; composition defines a "HAS A" relationship. 
+Inheritance defines an "IS A" relationship; composition defines a "HAS A" relationship. Composition is basically creating objects within objects. 
 
 Below example shows how a Personal Computer is made up of other parts. 
 
@@ -1210,6 +1210,15 @@ Below example shows how a Personal Computer is made up of other parts.
 ```java
 public class Main {
     public static void main(String[] args) {  
+        ComputerCase theCase = new ComputerCase("2208", "Dell", "240");
+        Monitor theMonitor = new Monitor("27inch Beast", "Acer", 27, "2540 x 1440");
+        Motherboard theMotherboard = new Motherboard("BJ-200", "Asus", 4, 6, "v2.44");
+        PersonalComputer thePC = new PersonalComputer("2208", "Dell", theCase, theMonitor, theMotherboard);
+
+        // thePC.getMonitor().drawPixelAt(10, 10, "red");
+        // thePC.getMotherboard().loadProgram("Windows OS");
+        // thePC.getComputerCase().pressPowerButton();
+        thePC.powerUp();
     }
 }
 
@@ -1217,7 +1226,6 @@ public class Main {
 "Product.java":
 ```java
 public class Product {
-
     private String model;
     private String manufacturer;
     private int width;
@@ -1310,40 +1318,32 @@ public class PersonalComputer extends Product {
         this.motherboard = motherboard;
     }
 
-    public ComputerCase getComputerCase() {
-        return computerCase;
+    private void drawLogo() {
+        monitor.drawPixelAt(1200, 50, "yellow");
     }
 
-    public Monitor getMonitor() {
-        return monitor;
+    public void powerUp() {
+        computerCase.pressPowerButton();
+        drawLogo();
     }
 
-    public Motherboard getMotherboard() {
-        return motherboard;
-    }
+    // public ComputerCase getComputerCase() {
+    //     return computerCase;
+    // }
+
+    // public Monitor getMonitor() {
+    //     return monitor;
+    // }
+
+    // public Motherboard getMotherboard() {
+    //     return motherboard;
+    // }
 }
-
 ```
 
+As a rule, look at using composition before implementing inheritance. Because composition is more flexible - you can add/remove parts, and these changes are less likely to have a downstream effect. It provides functional reuse outside of the class hierarchy - so classes can share attributes/behavior, by having similar components, instead of inheriting from a parent. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+In our example, we have both inheritance and composition. If you need to include digital projects, and make it inherit the Product class, then it shouldn't have physical dimensions, so the digital products are inappropriately represented. Instead, we should create a Dimensions class/interface and let the products that have physical dimensions to implement/composite it. 
 
 ## Encapsulation
 

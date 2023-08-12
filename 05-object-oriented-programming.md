@@ -1346,6 +1346,66 @@ As a rule, look at using composition before implementing inheritance. Because co
 In our example, we have both inheritance and composition. If you need to include digital projects, and make it inherit the Product class, then it shouldn't have physical dimensions, so the digital products are inappropriately represented. Instead, we should create a Dimensions class/interface and let the products that have physical dimensions to implement/composite it. 
 
 ## Encapsulation
+Hiding things, by making them private/inaccessible. Reasons for this:
+- To hide unnecessary details
+- To protect the integrity of data on an object
+- To decouple the published interface (API) that is exposed by the class, from the internal details of the class. Gives flexibility, in case the class members need to be changed in the future. 
+
+"Main.java":
+```java
+public class Main {
+    public static void main(String[] args) {
+       Player player = new Player();
+       player.name = "Tim";
+       player.health = 20;
+       player.weapon = "Sword";
+
+       int damage = 10;
+       player.loseHealth(damage);
+       System.out.println("Remaining health = " + player.healthRemaining());
+       player.health = 200; // setting members outside of normal game play calls. 
+       player.loseHealth(11);
+       System.out.println("Remaining health = " + player.healthRemaining());
+    }
+}
+```
+
+"Player.java":
+```java 
+public class Player {
+    public String name; // if later this var need to be renamed to fullName, then the code in the main function has to be changed accordingly
+    public int health; // player health may not be set during use
+    public String weapon;
+
+    public void loseHealth(int damage) {
+
+        health = health - damage;
+        if (health <= 0) {
+            System.out.println("Player knocked out of game");
+        }
+    }
+
+    public int healthRemaining() {
+        return health;
+    }
+
+    public void restoreHealth(int extraHealth) {
+
+        health = health + extraHealth;
+        if (health > 100) {
+            System.out.println("Player restored to 100%");
+            health = 100;
+        }
+    }
+}
+
+```
+
+Allowing direct access to data on an object, can potentially bypass the checks etc, vs how you wanted the class to manage the data. 
+
+Omitting a constructor may mean the calling code is responsible for setting up this data, on the new object. 
+
+This is what encapsulation does, and why we do not want our code to be like above. The appropriate implementation should look like below. 
 
 
 

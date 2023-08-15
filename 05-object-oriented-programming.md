@@ -1407,7 +1407,62 @@ Omitting a constructor may mean the calling code is responsible for setting up t
 
 This is what encapsulation does, and why we do not want our code to be like above. The appropriate implementation should look like below. 
 
+"Main.java":
+```java
+public class Main {
+    public static void main(String[] args) {
+        EnhancedPlayer tim = new EnhancedPlayer("Tim", 200, "Sword");
+        System.out.println("Initial health is " + tim.healthRemaining());
+    }
+}
+```
 
+"EnhancedPlayer.java":
+```java
+public class EnhancedPlayer {
+    private String fullName; // these are now private
+    private int healthPercentage; 
+    private String weapon; 
+
+    public EnhancedPlayer(String fullName) {
+        this(fullName, 100, "Sword");
+    }
+
+    public EnhancedPlayer(String fullName, int health, String weapon) {
+        // now health var has guardrail
+        this.fullName = fullName;
+        if (health <= 0 ) {
+            this.healthPercentage = 1;
+        } else if (health > 100) {
+            this.healthPercentage = 100;
+        } else {
+            this.healthPercentage = health;
+        }
+        this.weapon = weapon;
+    }
+
+    public void loseHealth(int damage) {
+        healthPercentage = healthPercentage - damage;
+        if (healthPercentage <= 0) {
+            System.out.println("Player knocked out of game");
+        }
+    }
+
+    public int healthRemaining() {
+        return healthPercentage;
+    }
+
+    public void restoreHealth(int extraHealth) {
+        healthPercentage = healthPercentage + extraHealth;
+        if (healthPercentage > 100) {
+            System.out.println("Player restored to 100%");
+            healthPercentage = 100;
+        }
+    }
+}
+```
+
+To rename an instance variable in a class, in IntelliJ, right click on the var name -> Refactor -> Rename... -> type the new name -> hit Enter -> choose to whether change it also in constructors -> OK. 
 
 ## Polymorphism
 

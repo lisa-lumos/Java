@@ -1465,6 +1465,89 @@ public class EnhancedPlayer {
 To rename an instance variable in a class, in IntelliJ, right click on the var name -> Refactor -> Rename... -> type the new name -> hit Enter -> choose to whether change it also in constructors -> OK. 
 
 ## Polymorphism
+Let's us to write code to call a method, but at runtime, this method's behavior can be different for different objects. 
+
+"Main.java":
+```java
+public class Main {
+    public static void main(String[] args) {
+        Movie theMovie1 = new Movie("Star Wars");
+        theMovie1.watchMovie(); // Star Wars is a Movie film
+
+        Movie theMovie2 = new Adventure("Star Wars");
+        theMovie2.watchMovie(); // Star Wars is a Adventure film (followed by 3 more lines)
+    }
+}
+```
+
+"Movie.java":
+```java
+public class Movie {
+    private String title;
+
+    public Movie(String title) {
+        this.title = title;
+    }
+
+    public void watchMovie() {
+      // getClass() returns class type info at runtime
+        String instanceType = this.getClass().getSimpleName();
+        System.out.println(title + " is a " + instanceType + " film");
+    }
+}
+
+class Adventure extends Movie {
+
+    public Adventure(String title) {
+        super(title);
+    }
+
+    @Override // created using IntelliJ code generation tool
+    public void watchMovie() {
+        super.watchMovie();
+        System.out.printf(".. %s%n".repeat(3),
+                "Pleasant Scene",
+                "Scary Music",
+                "Something Bad Happens");
+    }
+}
+
+class Comedy extends Movie { // created by clapsing and copying prv class
+
+    public Comedy(String title) {
+        super(title);
+    }
+
+    @Override
+    public void watchMovie() {
+        super.watchMovie();
+        System.out.printf(".. %s%n".repeat(3),
+                "Something funny happens",
+                "Something even funnier happens",
+                "Happy Ending");
+    }
+}
+
+class ScienceFiction extends Movie {
+
+    public ScienceFiction(String title) {
+        super(title);
+    }
+
+    @Override
+    public void watchMovie() {
+        super.watchMovie();
+        System.out.printf(".. %s%n".repeat(3),
+                "Bad Aliens do Bad Stuff",
+                "Space Guys Chase Aliens",
+                "Planet Blows Up");
+    }
+}
+```
+
+
+
+
 
 
 

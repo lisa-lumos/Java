@@ -1469,13 +1469,29 @@ Let's us to write code to call a method, but at runtime, this method's behavior 
 
 "Main.java":
 ```java
+import java.util.Scanner; // from IntelliJ auto import, when create a Scanner
+
 public class Main {
     public static void main(String[] args) {
-        Movie theMovie1 = new Movie("Star Wars");
-        theMovie1.watchMovie(); // Star Wars is a Movie film
+        // Movie theMovie1 = new Movie("Star Wars");
+        // theMovie1.watchMovie(); // Star Wars is a Movie film
 
-        Movie theMovie2 = new Adventure("Star Wars");
-        theMovie2.watchMovie(); // Star Wars is a Adventure film (followed by 3 more lines)
+        // Movie theMovie2 = new Adventure("Star Wars");
+        // theMovie2.watchMovie(); // Star Wars is a Adventure film (followed by 3 more lines)
+
+        Scanner s = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter Type (A for Adventure, C for Comedy, " +
+                    "S for Science Fiction, or Q to quit): ");
+            String type = s.nextLine();
+            if ("Qq".contains(type)) {
+                break;
+            }
+            System.out.print("Enter Movie Title: ");
+            String title = s.nextLine();
+            Movie movie = Movie.getMovie(type, title);
+            movie.watchMovie();
+        }
     }
 }
 ```
@@ -1493,6 +1509,16 @@ public class Movie {
       // getClass() returns class type info at runtime
         String instanceType = this.getClass().getSimpleName();
         System.out.println(title + " is a " + instanceType + " film");
+    }
+
+    // This is a factory method design pattern
+    public static Movie getMovie(String type, String title) {
+        return switch (type.toUpperCase().charAt(0)) {
+            case 'A' -> new Adventure(title);
+            case 'C' -> new Comedy(title);
+            case 'S' -> new ScienceFiction(title);
+            default -> new Movie(title);
+        };
     }
 }
 
@@ -1545,11 +1571,16 @@ class ScienceFiction extends Movie {
 }
 ```
 
+With polymorphism, if in the future, we need ao add a new movie type, then the calling code doesn't need to change at all. It doesn't need to know which exact class the returned object is. 
+
+Polymorphism enables us to write generic code, based on the base class, or a parent class. 
+
+
+## Casting with classes, using Object and var references
 
 
 
-
-
+## Testing the runtime type using the isntanceof operator
 
 
 

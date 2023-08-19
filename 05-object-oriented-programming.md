@@ -1575,12 +1575,50 @@ With polymorphism, if in the future, we need ao add a new movie type, then the c
 
 Polymorphism enables us to write generic code, based on the base class, or a parent class. 
 
-
 ## Casting with classes, using Object and var references
+"NextMain.java":
+```java
+public class NextMain {
+    public static void main(String[] args) {
+        Movie movie = Movie.getMovie("A", "Jaws");
+        movie.watchMovie();
+
+        // Adventure jaws = Movie.getMovie("A", "Jaws") will give compile error
+        // because without running the code, compiler cannot know 
+        // which exact class it will return
+        // could be a Comedy movie. 
+        Adventure jaws = (Adventure) Movie.getMovie("A", "Jaws");
+        // above casting will make the compiler shut up
+        // but if at runtime, it returned a Comedy,
+        // it will throw an exception. 
+        jaws.watchMovie();
+
+        // you can assign any object to a Object ref, then it loses its Comedy-ness
+        Object comedy = Movie.getMovie("C", "Airplane");
+        // casting it back to Comedy will recover its Comedy-ness
+        Comedy comedyMovie = (Comedy) comedy;
+        comedyMovie.watchComedy(); // works if Comedy class has this method
+
+        var airplane = Movie.getMovie("C", "Airplane");
+        airplane.watchMovie();
+
+        var plane = new Comedy("Airplane");
+        plane.watchComedy();
+    }
+}
+
+```
+
+`var` is a contextual keyword in Java, introduced in Java 10, that let your code use Local Variable Type Inference. Using this, Java can figure out the compile-time type for us, from the signature of the method. It helps with the readability of the code, and to reduce boilerplate code. 
+
+The compile time type is the declared type (as variable ref, return type, ...). 
+
+## Testing the runtime type using the instanceOf operator
 
 
 
-## Testing the runtime type using the isntanceof operator
+
+
 
 
 

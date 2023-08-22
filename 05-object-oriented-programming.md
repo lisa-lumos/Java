@@ -1604,6 +1604,18 @@ public class NextMain {
 
         var plane = new Comedy("Airplane");
         plane.watchComedy();
+
+        Object unknownObject = Movie.getMovie("S", "Star Wars");
+        if (unknownObject.getClass().getSimpleName() == "Comedy") { 
+            // shows runtime type, but not the best way
+            Comedy c = (Comedy) unknownObject;
+            c.watchComedy();
+        } else if (unknownObject instanceof Adventure) {
+            ((Adventure) unknownObject).watchAdventure();
+        } else if (unknownObject instanceof ScienceFiction syfy) {
+            // if the instance matches, it will take out and cast the obj for you
+            syfy.watchScienceFiction();
+        }
     }
 }
 
@@ -1613,7 +1625,7 @@ public class NextMain {
 
 The compile time type is the declared type (as variable ref, return type, ...). 
 
-## Testing the runtime type using the instanceOf operator
+Find the runtime type, using the instanceOf operator. 
 
 
 

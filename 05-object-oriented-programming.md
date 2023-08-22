@@ -1627,24 +1627,80 @@ The compile time type is the declared type (as variable ref, return type, ...).
 
 Find the runtime type, using the instanceOf operator. 
 
-
-
-
-
-
-
-
 ## Organizing Java Classes, Packages and Import Statements
+A package is a namespace that organizes a set of related types. In general, it corresponds to a folder/directory on th OS, but it is not a requirement. In IntelliJ, we don't need to worry about how packages and classes are stored on the file system. 
 
+The package structure is hierarchical. Common practice has package names as all lower case, with "." to separate the hierarchical level. Such as "java.lang". 
 
+Order of statements in code: package statement, then import statements, then class/type declarations. 
 
+Import statements can have wildcards: `import java.util.*; `
 
+Packages let us re-use common class names across different libraries/applications. It also allows us to encapsulate classes from other classes in other packages. 
 
+It is common practice to use the reverse domain name to start your own package naming conventions. For example, if you company is abccompany.com, you package prefixes would be com.abccompany. 
 
+A class's fully qualified class name has: package name and the class name. You can use the fully qualified class name, instead of the import statement, such as the Scanner here:
+``` java
+package dev.lpa.package_one;
 
+public class Main {
+  public static void main(String[] args) {
+    java.util.Scanner scanner = new java.util.Scanner(System.in);
+  }
+}
+```
 
+If we do not specify a package statement, the classes will be placed into the Unnamed Package (default). For your applications, you should always specify a package statement, and avoid using the default/unnamed package. Because you cannot import types from the default package into other classes, outside of the default package. 
 
+In IntelliJ, to create a package, in the project explorer: right click on the "src" folder -> New -> Package. I will name it "dev.lpa". You can see that there will be a "dev.lpa" folder system created inside of the "src" folder. 
 
+Gear symbol -> Tree Appearance -> Compact Middle Packages. This will expand the folder tree. Right click on the "lpa" folder -> New -> Java Class -> enter "Main". Note that IntelliJ creates the package statement for this new class:
+```java
+package dev.lpa;
+public class Main {
+}
+```
 
+You can also create a new package, using the full package structure in your new class name. Right click on the "src" folder -> New -> Java Class -> name it "com.abc.first.item". Note that IntelliJ creates a folder structure "com/abc/first", and places "Item.java" inside it. 
 
+"com/abc/first/Item.java":
+```java
+package com.abc.first;
 
+public class Item {
+    private String type;
+
+    public Item(String type) {
+        this.type = type;
+    }
+
+    @Override // created by Generate -> toString()
+    public String toString() {
+        return "Item{" +
+                "type='" + type + '\'' +
+                '}';
+    }
+}
+
+```
+"dev/lpa/Main.java":
+```java
+package dev.lpa;
+import com.abc.first.*;
+
+public class Main { // psvm as shortcut
+
+    public static void main(String[] args) {
+        // when typed Item, 
+        // IntelliJ displays all the classes related to it. 
+        // If we select the first item in the list, 
+        // IntelliJ will add the import statement for us. 
+        Item firstItem = new Item("Burger");
+        // If you do not use import statement, 
+        // you can use fully qualified class name: 
+        com.abc.first.Item firstItem = new com.abc.first.Item("Burger");
+        System.out.println(firstItem);
+    }
+}
+```

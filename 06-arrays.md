@@ -1,4 +1,5 @@
 # 6. Arrays
+## Arrays intro
 You can have arrays of any primitive type, or arrays of any class. An array is not resizable. 
 
 "dev/lpa/Main.java":
@@ -66,10 +67,52 @@ An array is a special class in Java. It is still a class, and ultimately inherit
 
 When you do not initialize an array, all its elems get initialized to the default val for that datatype. For primitive vals, it is 0 for numeric type; for booleans, it is false; for any class type, it is null. 
 
+## java.util.Arrays
+"dev/lpa/Main.java":
+```java
+package dev.lpa;
+import java.util.Arrays;
+import java.util.Random;
 
+public class Main {
+    public static void main(String[] args) {
+        int[] firstArray = getRandomArray(10);
+        System.out.println(Arrays.toString(firstArray));
+        Arrays.sort(firstArray); // sort the array in place
+        System.out.println(Arrays.toString(firstArray));
 
+        int[] secondArray = new int[10];
+        System.out.println(Arrays.toString(secondArray)); // return all 0s
+        Arrays.fill(secondArray, 5); // fill the array with 5s
+        System.out.println(Arrays.toString(secondArray));
 
+        int[] thirdArray = getRandomArray(10);
+        System.out.println(Arrays.toString(thirdArray));
 
+        int[] fourthArray = Arrays.copyOf(thirdArray, thirdArray.length); // this creates a new array, and copy the values over to it.
+        System.out.println(Arrays.toString(fourthArray));
+
+        Arrays.sort(fourthArray);
+        System.out.println(Arrays.toString(thirdArray)); // the old array is not affected by sorting
+        System.out.println(Arrays.toString(fourthArray));
+
+        int[] smallerArray = Arrays.copyOf(thirdArray, 5); // copy over the 1st 5 elems
+        System.out.println(Arrays.toString(smallerArray));
+
+        int[] largerArray = Arrays.copyOf(thirdArray, 15); // fill 0s if 15 exceed original array length
+        System.out.println(Arrays.toString(largerArray));
+    }
+
+    private static int[] getRandomArray(int len) {
+        Random random = new Random();
+        int[] myArray = new int[len];
+        for (int i = 0; i < len; i++) {
+            myArray[i] = random.nextInt(100);
+        }
+        return myArray;
+    }
+}
+```
 
 
 

@@ -101,6 +101,21 @@ public class Main {
 
         int[] largerArray = Arrays.copyOf(thirdArray, 15); // fill 0s if 15 exceed original array length
         System.out.println(Arrays.toString(largerArray));
+
+        String[] sArray = {"Able", "Jane", "Mark", "Ralph", "David"};
+        Arrays.sort(sArray);
+        System.out.println(Arrays.toString(sArray));
+        if (Arrays.binarySearch(sArray, "Mark") >= 0) {
+            System.out.println("Found Mark in the list");
+        }
+
+        int[] s1 = {1, 2, 3, 4, 5};
+        int[] s2 = {1, 2, 3, 4, 5, 0};
+        if (Arrays.equals(s1, s2)) { // compare the order, and the values
+            System.out.println("Arrays are equal");
+        } else {
+            System.out.println("Arrays are not equal");
+        }
     }
 
     private static int[] getRandomArray(int len) {
@@ -114,9 +129,35 @@ public class Main {
 }
 ```
 
+## References Types vs Value Types
+"dev/lpa/Main.java":
+```java
+package dev.lpa;
+import java.util.Arrays;
 
+public class Main {
+    public static void main(String[] args) {
+        int[] myIntArray = new int[5];
+        int[] anotherArray = myIntArray;
 
+        System.out.println("myIntArray = " + Arrays.toString(myIntArray));
+        System.out.println("anotherArray = " + Arrays.toString(anotherArray));
 
+        anotherArray[0] = 1;
+        modifyArray(myIntArray);
+
+        System.out.println("after change myIntArray = "
+                + Arrays.toString(myIntArray));
+        System.out.println("after change anotherArray = " +
+                Arrays.toString(anotherArray));
+    }
+
+    private static void modifyArray(int[] array) {
+        array[1] = 2;
+    }
+}
+
+```
 
 
 

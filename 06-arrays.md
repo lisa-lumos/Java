@@ -147,52 +147,57 @@ public class Main {
         modifyArray(myIntArray);
 
         System.out.println("after change myIntArray = "
-                + Arrays.toString(myIntArray));
+                + Arrays.toString(myIntArray));// 1, 2, 0, 0, 0
         System.out.println("after change anotherArray = " +
-                Arrays.toString(anotherArray));
+                Arrays.toString(anotherArray));// 1, 2, 0, 0, 0
     }
 
     private static void modifyArray(int[] array) {
         array[1] = 2;
     }
 }
-
 ```
 
+## Variable arguments
+"dev/lpa/Main.java": 
+```java
+package dev.lpa;
+
+public class Main {
+    public static void main(String... args) { // means takes 0/1/many strings
+        String[] splitStrings = "Hello World again".split(" ");
+        printText(splitStrings); // passes an array of strs
+
+        printText("Hello"); // passes a single str
+        printText("Hello", "World", "again"); // passes 3 strs
+        printText(); // passes nothing
+
+        // example of Java own classes that uses variable argument
+        String[] sArray = {"first", "second", "third", "fourth", "fifth"};
+        System.out.println(String.join(",", sArray));
+    }
+
+    private static void printText(String... textList) {
+        for (String t : textList) {
+            System.out.println(t);
+        }
+    }
+}
+```
+`String... args` is the "variable argument" parameter. It can take a string array, or a single string, many strings, or nothing. 
+
+Rules: There can only be one variable argument in a method, and it must be the last argument. 
+
+Java uses variable arguments in many methods in their library classes. For example, the Array.join() has its last argument as a variable argument, that is why the delimiter needs to be specified first in the argument list. 
+
+
+## Two-dimensional arrays
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Multi-dimensional arrays
 
 
 

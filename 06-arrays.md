@@ -190,23 +190,55 @@ Rules: There can only be one variable argument in a method, and it must be the l
 
 Java uses variable arguments in many methods in their library classes. For example, the Array.join() has its last argument as a variable argument, that is why the delimiter needs to be specified first in the argument list. 
 
+## Two-dimensional and multi-dimensional arrays
+To declare a 2d array literal: `int[][] array = {{1, 2}, {4, 5, 6}, {10}};`. Note that 2d array not need to have a uniform matrix. 
 
-## Two-dimensional arrays
+"dev/lpa/Main.java": 
+```java
+package dev.lpa;
+import java.util.Arrays;
 
+public class Main {
+    public static void main(String[] args) {
+        int[][] arr = new int[4][4]; // default all vals to 0s
+        System.out.println(Arrays.toString(arr)); // print out 4 hashes
+        System.out.println("arr.length = " + arr.length);
 
+        for (int[] outer : arr) {
+            System.out.println(Arrays.toString(outer)); // print out 4 arrays of 4 0s
+        }
 
+        for (int i = 0; i < arr.length; i++) {
+            var innerArray = arr[i];
+            for (int j = 0; j < innerArray.length; j++) {
+                arr[i][j] = (i * 10) + (j + 1);
+            }
+        }
+        System.out.println(Arrays.deepToString(arr)); // print multi-dim arr
 
+        arr[1] = new int[] {10, 20, 30};
+        System.out.println(Arrays.deepToString(arr)); // not restricted to fix size
 
-## Multi-dimensional arrays
+        Object[] anyArray = new Object[3];
+        System.out.println(Arrays.toString(anyArray));
 
+        anyArray[0] = new String[] {"a", "b", "c"};
+        anyArray[1] = new String[][]{
+                {"1", "2"},
+                {"3", "4", "5"},
+                {"6", "7", "8", "9"}
+        };
+        anyArray[2] = new int[2][2][2];
+        // anyArray[2] = "Hello"; // will have error in line x, because it is not an object array
+        System.out.println(Arrays.deepToString(anyArray));
 
+        for (Object element : anyArray) {
+            System.out.println("Element type = " + element.getClass().getSimpleName());
+            System.out.println("Element toString() = " + element);
+            System.out.println(Arrays.deepToString((Object[]) element)); // line x
+        }
+    }
+}
+```
 
-
-
-
-
-
-
-
-
-
+It is a best practice, to stick to more strictly typed arrays. 

@@ -63,9 +63,9 @@ public class Main {
 
 Recommend to pay attention to IntelliJ's warnings, and resolve as many as you can. 
 
-"src/dev/lpa/dev/lpa/Main.java":
+"src/dev/lpa/MoreLists.java":
 ```java
-package dev.lpa.dev.lpa;
+package dev.lpa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +94,53 @@ public class MoreLists {
 
         groceries.addAll(nextList); // another way. takes a list of args
         System.out.println(groceries);
+
+        System.out.println("Third item = " + groceries.get(2));
+
+        if (groceries.contains("mustard")) {
+            System.out.println("List contains mustard");
+        }
+
+        groceries.add("yogurt");
+        System.out.println("first = " + groceries.indexOf("yogurt")); // 4
+        System.out.println("last = " + groceries.lastIndexOf("yogurt")); // 8
+
+        System.out.println(groceries);
+        groceries.remove(1); // rmv by idx
+        System.out.println(groceries);
+        groceries.remove("yogurt"); // rmv the first occurrence only
+        System.out.println(groceries);
+
+        // removes all elems that exists the specified list
+        groceries.removeAll(List.of("apples", "eggs"));
+        System.out.println(groceries);
+
+        // removes everything except elems in the specified list
+        groceries.retainAll(List.of("apples", "milk", "mustard", "cheese"));
+        System.out.println(groceries);
+
+        groceries.clear(); // remove all elems
+        System.out.println(groceries);
+        System.out.println("isEmpty = " + groceries.isEmpty());
+
+        groceries.addAll(List.of("apples", "milk", "mustard", "cheese"));
+        groceries.addAll(Arrays.asList("eggs", "pickles", "mustard", "ham"));
+        System.out.println(groceries);
+        groceries.sort(Comparator.naturalOrder());
+        System.out.println(groceries);
+
+        groceries.sort(Comparator.reverseOrder());
+        System.out.println(groceries);
+
+        // this is useful when you need to pass an array,
+        // to methods that accept arrays, rather than lists
+        var groceryArray = groceries.toArray(new String[groceries.size()]);
+        System.out.println(Arrays.toString(groceryArray));
     }
 }
 ```
+
+## Arrays vs ArrayLists
 
 
 

@@ -75,7 +75,7 @@ public class MoreLists {
         String[] items = {"apples", "bananas", "milk", "eggs"};
 
         // the static factory method in List class, returns a instance of that class
-        // here, it transforms an String array to a String List
+        // here, it transforms an String array to a immutable String List
         List<String> myList = List.of(items); 
         System.out.println(myList);
         System.out.println(myList.getClass().getName());
@@ -141,11 +141,41 @@ public class MoreLists {
 ```
 
 ## Arrays vs ArrayLists
+ArrayLists do not support primitive types. ArrayLists implements List interface. 
 
+Array is not resizable. 
 
+"src/dev/lpa/Main.java":
+```java
+package dev.lpa;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
+public class Main {
+    public static void main(String[] args) {
+        String[] originalArray = new String[] {"First", "Second", "Third"};
+        // this is a list backed by the array, they change together
+        // not resizable, but mutable
+        var originalList = Arrays.asList(originalArray);
 
+        originalList.set(0, "one");
+        System.out.println("list: " + originalList); // [one, Second, Third]
+        System.out.println("array: " + Arrays.toString(originalArray)); // [one, Second, Third]
 
+        originalList.sort(Comparator.naturalOrder());
+        System.out.println("array: " + Arrays.toString(originalArray));
+
+        // originalList.add("fourth"); // cannot add/rmv elems
+
+        // this creates a fixed size list
+        List<String> newList = Arrays.asList("Sunday", "Monday", "Tuesday");
+        System.out.println(newList);
+    }
+}
+```
+
+In general, arrays are more efficient, as they have fixed size, and support primitive types. But the ArrayList class has more functionalities. 
 
 ## LinkedList
 

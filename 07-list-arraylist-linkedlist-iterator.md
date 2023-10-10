@@ -178,6 +178,24 @@ public class Main {
 In general, arrays are more efficient, as they have fixed size, and support primitive types. But the ArrayList class has more functionalities. 
 
 ## LinkedList
+When an array of primitive types is allocated, the space is continuous in the address space. 
+
+For array of reference types, the objects are not stored continuously in memory, but their references are. 
+
+To remove an elem, the addresses need to be shifted, to rmv an empty space. Same with adding an elem. Both can be expensive. 
+
+An ArrayList is created with an initial capacity, depending on how many elems we create the list with, or the capacity you specify during creation. But if the num of elems exceeds the current capacity, Java needs to re-allocate memory, to fit all elems, and this can be a costly operation. 
+
+The LinkedList is not ordered at all. Accessing an elem takes O(n) time, but inserting/removing is simple, as we do not need to move the elems around. 
+
+The ArrayList is usually the better default choice for a List, especially if the List is used predominantly for storing/reading data. If you know the maximum number of possible items, then it's probably better to use an ArrayList, but set its capacity.
+
+An ArrayList's index is an int type, so an ArrayList's capacity is limited to the maximum number of elements an int can hold, Integer.MAX_VALUE = 2,147,483,647. You may want to consider using a LinkedList if you're processing a large amount of elements, and the maximum elements isn't known, but may be greater than Integer.MAX_VALUE. 
+
+A LinkedList can be more efficient, when items are being processed predominantly from either the head or tail of the list.
+
+
+
 
 
 

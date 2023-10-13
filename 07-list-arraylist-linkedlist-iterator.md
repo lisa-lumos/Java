@@ -221,7 +221,6 @@ public class Main {
     }
 
     private static void addMoreElements(LinkedList<String> list) {
-
         list.addFirst("Darwin");
         list.addLast("Hobart");
         // Queue methods
@@ -230,11 +229,9 @@ public class Main {
         list.offerLast("Toowoomba"); // same with offer()
         // Stack Methods
         list.push("Alice Springs"); // push an elem to the top of the (stack), aka, head of the list (using linked list as a stack)
-
     }
 
     private static void removeElements(LinkedList<String> list) {
-
         list.remove(4); // rmv by idx
         list.remove("Brisbane"); // rmv by name
 
@@ -265,25 +262,28 @@ public class Main {
     }
 
     private static void gettingElements(LinkedList<String> list) {
-
+        // retrieve an elem by idx. Java will decide from which end it starts to traverse the doubly linked list, to find it faster
         System.out.println("Retrieved Element = " + list.get(4));
 
+        // get the first/last elem of the doubly linked list
         System.out.println("First Element = " + list.getFirst());
         System.out.println("Last Element = " + list.getLast());
 
+        // return idx of an elem
         System.out.println("Darwin is at position: " + list.indexOf("Darwin"));
-        System.out.println("Melbourne is at position: " +
-                list.lastIndexOf("Melbourne"));
-        // Queue retrieval method
+        System.out.println("Melbourne is at position: " + list.lastIndexOf("Melbourne"));
+
+        // Queue retrieval method, return head elem of the queue
         System.out.println("Element from element() = " + list.element());
-        // Stack retrieval methods
+
+        // Stack retrieval methods, return top/bottom elem of stack
         System.out.println("Element from peek() = " + list.peek());
         System.out.println("Element from peekFirst() = " + list.peekFirst());
         System.out.println("Element from peekLast() = " + list.peekLast());
     }
 
+    // traverse the linked list, inefficient
     public static void printItinerary(LinkedList<String> list) {
-
         System.out.println("Trip starts at " + list.getFirst());
         for (int i = 1; i < list.size(); i++) {
             System.out.println("--> From: " + list.get(i - 1) + " to " + list.get(i));
@@ -291,37 +291,31 @@ public class Main {
         System.out.println("Trip ends at " + list.getLast());
     }
 
+    // traverse the linked list, more efficient, but not ideal
     public static void printItinerary2(LinkedList<String> list) {
-
         System.out.println("Trip starts at " + list.getFirst());
         String previousTown = list.getFirst();
         for (String town : list) {
             System.out.println("--> From: " + previousTown + " to " + town);
             previousTown = town;
-        }
-
+        } // this prints out from 1st elem to 1st elem at the beginning
         System.out.println("Trip ends at " + list.getLast());
     }
 
+    // traverse the linked list, best way to print itinerary
     public static void printItinerary3(LinkedList<String> list) {
-
         System.out.println("Trip starts at " + list.getFirst());
         String previousTown = list.getFirst();
-        ListIterator<String> iterator = list.listIterator(1);
+        ListIterator<String> iterator = list.listIterator(1); // set before 2nd elem
         while (iterator.hasNext()) {
             var town = iterator.next();
             System.out.println("--> From: " + previousTown + " to " + town);
             previousTown = town;
         }
-
         System.out.println("Trip ends at " + list.getLast());
     }
 }
-
 ```
-
-
-
 
 ## Iterators
 

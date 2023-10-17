@@ -314,13 +314,36 @@ public class Main {
         }
         System.out.println("Trip ends at " + list.getLast());
     }
+
+    private static void testIterator(LinkedList<String> list) {
+        var iterator = list.listIterator();
+        // use iterator to modify the list
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+            if (iterator.next().equals("Brisbane")) {
+                // iterator.remove(); // rmv the next elem
+                iterator.add("Lake Wivenhoe");
+            }
+        }
+        // now iterator is right after the last elem, can move backwards from here
+        while (iterator.hasPrevious()) {
+            System.out.println(iterator.previous());
+        }
+
+        System.out.println(list);
+        // get an iterator with cursor position set to right before a specific idx
+        var iterator2 = list.listIterator(3); // so iterator2.next() is the idx=3 elem
+        System.out.println(iterator2.previous());
+    }
 }
 ```
 
 ## Iterators
+An iterator can be thought of as similar to a database cursor. 
 
+An Iterator is forwards only, and only supports the remove() method. A ListIterator can both go backwards and forwards, and in addition to the remove() method, it also supports the add() and set() methods. 
 
-
+Note that iterator's cursor position is always between the elems, not at the elems. 
 
 ## Autoboxing and Unboxing
 

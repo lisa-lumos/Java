@@ -474,7 +474,7 @@ public enum Topping {
     PICKLES,
     BACON,
     CHEDDAR,
-    TOMATO;
+    TOMATO; // need ; before you add methods to the enum
 
     public double getPrice() {
         return switch (this) {

@@ -42,7 +42,8 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // Animal animal = new Animal("animal", "big", 100);
+        // cannot compile, bacauuse Animal is abstract
+        // Animal animal = new Animal("animal", "big", 100); 
         Dog dog = new Dog("Wolf", "big", 100 );
         dog.makeNoise();
         doAnimalStuff(dog);
@@ -57,6 +58,8 @@ public class Main {
         animals.add(new Horse("Clydesdale", "large", 1000));
 
         for (Animal animal : animals) {
+            // And at runtime, instances that inherit from Animal class,
+            // can use polymorphism, to execute code specific to the concrete type.
             doAnimalStuff(animal);
             if (animal instanceof Mammal currentMammal) {
                 currentMammal.shedHair();
@@ -65,6 +68,8 @@ public class Main {
     }
 
     private static void doAnimalStuff(Animal animal) {
+        // Animal is abstract, so you cannot create an instance of Animal
+        // but you can use its type
         animal.makeNoise();
         animal.move("slow");
     }

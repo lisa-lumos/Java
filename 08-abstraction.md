@@ -81,6 +81,8 @@ public class Main {
 package dev.lpa;
 
 // classes that extends an abstract class, can also be abstract itself
+// it can choose to implement some of its parent's abstract methods, or not. 
+// it can also have additional abstract methods, which will force its subclasses to implement
 abstract class Mammal extends Animal {
     public Mammal(String type, String size, double weight) {
         super(type, size, weight);
@@ -92,7 +94,7 @@ abstract class Mammal extends Animal {
         System.out.println( speed.equals("slow") ? "walks" : "runs");
     }
 
-    public abstract void shedHair();
+    public abstract void shedHair(); // this ia a new abstract method
 }
 
 public abstract class Animal { // you cannot create an instance of an abstract class, because it is incomplete
@@ -117,6 +119,8 @@ public abstract class Animal { // you cannot create an instance of an abstract c
     public abstract void makeNoise();
 
     public final String getExplicitType() {
+        // subclasses can use this concrete method
+        // but final keyword prevent it from being overridden by subclasses
         return getClass().getSimpleName() + " (" + type + ")";
     }
 }
@@ -211,7 +215,11 @@ public class Horse extends Mammal {
 ```
 
 
+## Interfaces
 
+
+
+## Interface vs Abstract Class
 
 
 

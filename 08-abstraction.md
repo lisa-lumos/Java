@@ -211,11 +211,250 @@ public class Horse extends Mammal {
     public void makeNoise() {
     }
 }
+```
+
+## Interfaces
+An interface is a special type, like a contract, that the compiler enforces for a class. By declaring using an interface, your class must implement all the abstract methods, that are declared in the interface. 
+
+A class agrees to this, so that ic could be known by that interface type, by the outside world. An interface allows these classes that have little else in common, to be recognized as a special reference type. 
+
+Many interfaces will end in "able", like Comparable, Iterable, ..., meaning something is capable, of a set of behaviors. 
+
+We can use both extends and implements in the same class declaration. A class can only extend a single class (Java is single inheritance), but a class can implement many interfaces, which gives us powerful plug-and-play functionality. 
+
+If we omit an access modifier on a class member, it is implicitly package private.
+
+If we omit an access modifier on an interface member, it is implicitly public. You cannot have protected members in an interface. 
+
+Only a concrete method can have private access. 
+
+"Main.java":
+```java
+package dev.lpa;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        Bird bird = new Bird();
+        Animal animal = bird; // can assign bird to different ref types
+        FlightEnabled flier = bird; // can assign bird to different ref types
+        Trackable tracked = bird; // can assign bird to different ref types
+
+        animal.move();
+        // The type you use to declare the variable, 
+        // determines which methods you can call in your code. 
+        // flier.move();
+        // tracked.move();
+
+        flier.takeOff();
+        flier.fly();
+        tracked.track();
+        flier.land();
+
+        inFlight(flier);
+        inFlight(new Jet());
+        Trackable truck = new Truck();
+        truck.track();
+
+        double kmsTraveled = 100;
+        double milesTraveled = kmsTraveled * FlightEnabled.KM_TO_MILES;
+        System.out.printf("The truck traveled %.2f km or %.2f miles%n",
+                kmsTraveled, milesTraveled);
+
+        LinkedList<FlightEnabled> fliers = new LinkedList<>();
+        fliers.add(bird);
+
+        List<FlightEnabled> betterFliers = new LinkedList<>();
+        betterFliers.add(bird);
+
+        triggerFliers(fliers);
+        flyFliers(fliers);
+        landFliers(fliers);
+
+        triggerFliers(betterFliers);
+        flyFliers(betterFliers);
+        landFliers(betterFliers);
+    }
+
+    private static void inFlight(FlightEnabled flier) {
+        flier.takeOff();
+        flier.fly();
+        if (flier instanceof Trackable tracked) {
+            tracked.track();
+        }
+        flier.land();
+    }
+
+    private static void triggerFliers(List<FlightEnabled> fliers) {
+        for (var flier : fliers) {
+            flier.takeOff();
+        }
+    }
+
+    private static void flyFliers(List<FlightEnabled> fliers) {
+        for (var flier : fliers) {
+            flier.fly();
+        }
+    }
+
+    private static void landFliers(List<FlightEnabled> fliers) {
+        for (var flier : fliers) {
+            flier.land();
+        }
+    }
+}
+```
+
+"Animal.java":
+```java
+package dev.lpa;
+
+enum FlightStages implements Trackable {GROUNDED, LAUNCH, CRUISE, DATA_COLLECTION;
+    @Override
+    public void track() {
+        if (this != GROUNDED) {
+            System.out.println("Monitoring " + this);
+        }
+    }
+}
+
+record DragonFly(String name, String type) implements FlightEnabled {
+    @Override
+    public void takeOff() {
+    }
+
+    @Override
+    public void land() {
+    }
+
+    @Override
+    public void fly() {
+    }
+}
+
+class Satellite implements OrbitEarth {
+    public void achieveOrbit() {
+        System.out.println("Orbit achieved!");
+    }
+
+    @Override
+    public void takeOff() {
+    }
+
+    @Override
+    public void land() {
+    }
+
+    @Override
+    public void fly() {
+    }
+}
+
+interface OrbitEarth extends FlightEnabled {
+    void achieveOrbit();
+}
+
+interface FlightEnabled {
+    double MILES_TO_KM = 1.60934;
+    double KM_TO_MILES = 0.621371;
+
+    // no need to declare the interface, or method inside it to be "abstract", 
+    // because it is implicit for all interfaces
+    // same with "public" modifier
+    void takeOff(); 
+    void land();
+    void fly();
+
+}
+
+interface Trackable {
+    void track();
+}
+
+
+public abstract class Animal {
+    public abstract void move();
+}
+```
+
+"Bird.java":
+```java
+package dev.lpa;
+
+public class Bird extends Animal implements FlightEnabled, Trackable {
+    @Override
+    public void move() {
+        System.out.println("Flaps wings");
+    }
+
+    @Override
+    public void takeOff() {
+        System.out.println(getClass().getSimpleName() + " is taking off");
+    }
+
+    @Override
+    public void land() {
+        System.out.println(getClass().getSimpleName() + " is landing");
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(getClass().getSimpleName() + " is flying");
+    }
+
+    @Override
+    public void track() {
+        System.out.println(getClass().getSimpleName() + "'s coordinates recorded");
+    }
+}
+```
+
+"Jet.java":
+```java
+package dev.lpa;
+
+public class Jet implements FlightEnabled, Trackable {
+    @Override
+    public void takeOff() {
+        System.out.println(getClass().getSimpleName() + " is taking off");
+    }
+
+    @Override
+    public void land() {
+        System.out.println(getClass().getSimpleName() + " is landing");
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(getClass().getSimpleName() + " is flying");
+    }
+
+    @Override
+    public void track() {
+        System.out.println(getClass().getSimpleName() + "'s coordinates recorded");
+    }
+}
+
+```
+
+"Truck.java":
+```java
+package dev.lpa;
+
+public class Truck implements Trackable {
+    @Override
+    public void track() {
+        System.out.println(getClass().getSimpleName() + "'s coordinates recorded");
+    }
+}
 
 ```
 
 
-## Interfaces
+
+
 
 
 

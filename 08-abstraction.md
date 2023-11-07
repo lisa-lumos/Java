@@ -216,7 +216,7 @@ public class Horse extends Mammal {
 ## Interfaces
 An interface is a special type, like a contract, that the compiler enforces for a class. By declaring using an interface, your class must implement all the abstract methods, that are declared in the interface. 
 
-A class agrees to this, so that ic could be known by that interface type, by the outside world. An interface allows these classes that have little else in common, to be recognized as a special reference type. 
+A class agrees to this, so that ic could be known by that interface type, by the outside world. An interface allows these classes that have little else in common, to be recognized as a special reference type. Interfaces allows us to type objects differently, by behavior only. 
 
 Many interfaces will end in "able", like Comparable, Iterable, ..., meaning something is capable, of a set of behaviors. 
 
@@ -227,6 +227,17 @@ If we omit an access modifier on a class member, it is implicitly package privat
 If we omit an access modifier on an interface member, it is implicitly public. You cannot have protected members in an interface. 
 
 Only a concrete method can have private access. 
+
+Any fields declared inside an interface, are not instance fields. They are implicitly public, static, and final. 
+
+A constant variable in Java is a final variable of primitive type, that is initialized with a constant expression. Constants in Java are usually named with all uppercase letter, with underscores between the words. Access a static constant via the type name, such as `Integer.MAX_VALUE`. 
+
+
+
+
+
+
+
 
 "Main.java":
 ```java
@@ -258,6 +269,7 @@ public class Main {
         Trackable truck = new Truck();
         truck.track();
 
+        // access constants that lives in an interface
         double kmsTraveled = 100;
         double milesTraveled = kmsTraveled * FlightEnabled.KM_TO_MILES;
         System.out.printf("The truck traveled %.2f km or %.2f miles%n",
@@ -357,8 +369,8 @@ interface OrbitEarth extends FlightEnabled {
 }
 
 interface FlightEnabled {
-    double MILES_TO_KM = 1.60934;
-    double KM_TO_MILES = 0.621371;
+    double MILES_TO_KM = 1.60934; // implicitly public, static, and final
+    double KM_TO_MILES = 0.621371; // implicitly public, static, and final
 
     // no need to declare the interface, or method inside it to be "abstract", 
     // because it is implicit for all interfaces
@@ -443,6 +455,7 @@ public class Jet implements FlightEnabled, Trackable {
 ```java
 package dev.lpa;
 
+// you can mix and match the interface as needed. 
 public class Truck implements Trackable {
     @Override
     public void track() {

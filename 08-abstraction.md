@@ -232,12 +232,15 @@ Any fields declared inside an interface, are not instance fields. They are impli
 
 A constant variable in Java is a final variable of primitive type, that is initialized with a constant expression. Constants in Java are usually named with all uppercase letter, with underscores between the words. Access a static constant via the type name, such as `Integer.MAX_VALUE`. 
 
+Interfaces can "extend" multiple other Interfaces, but cannot "implement" Interfaces. 
 
+Both interfaces and abstract classes are "abstracted reference types". Reference types can be used in code, as variable types, method parameters, return types, list types, etc. 
 
+When you use an abstracted reference type, it is called "coding to an interface". This means you code doesn't use specific types, but more generalized ones, usually an interface type. This technique is preferred, because it allows many runtime instances of various classes, to be processed uniformly, by the same code. It also allows for substitutions of some other class/object, that still implements the same interface, without forcing a major refactor of the code. 
 
+Using interface types as the reference type, is considered the best practice. 
 
-
-
+Method parameters, method return types, local variable references, class variables, should try to use the interface type as the reference variable type, whenever possible. This makes the code more extensible in the future. 
 
 "Main.java":
 ```java
@@ -278,6 +281,11 @@ public class Main {
         LinkedList<FlightEnabled> fliers = new LinkedList<>();
         fliers.add(bird);
 
+        // use List, instead of more specific ones, 
+        // allows space for future changes, 
+        // such as changing concrete type from LinkedList to ArrayList
+        // without changing most part of the code. 
+        // this is coding to an interface
         List<FlightEnabled> betterFliers = new LinkedList<>();
         betterFliers.add(bird);
 
@@ -299,6 +307,8 @@ public class Main {
         flier.land();
     }
 
+    // using List here, accommodates future changes. 
+    // This is coding to an interface
     private static void triggerFliers(List<FlightEnabled> fliers) {
         for (var flier : fliers) {
             flier.takeOff();
@@ -323,6 +333,7 @@ public class Main {
 ```java
 package dev.lpa;
 
+// enum can implement interfaces, but it cannot extend classes
 enum FlightStages implements Trackable {GROUNDED, LAUNCH, CRUISE, DATA_COLLECTION;
     @Override
     public void track() {
@@ -332,6 +343,7 @@ enum FlightStages implements Trackable {GROUNDED, LAUNCH, CRUISE, DATA_COLLECTIO
     }
 }
 
+// record can implement interfaces, but it cannot extend classes
 record DragonFly(String name, String type) implements FlightEnabled {
     @Override
     public void takeOff() {
@@ -347,6 +359,7 @@ record DragonFly(String name, String type) implements FlightEnabled {
 }
 
 class Satellite implements OrbitEarth {
+    // it has to implement all interface methods, including their extended ones
     public void achieveOrbit() {
         System.out.println("Orbit achieved!");
     }
@@ -364,6 +377,7 @@ class Satellite implements OrbitEarth {
     }
 }
 
+// an interface that extends another interface
 interface OrbitEarth extends FlightEnabled {
     void achieveOrbit();
 }
@@ -465,11 +479,11 @@ public class Truck implements Trackable {
 
 ```
 
+Coding to an interface scales well, supports new subtypes, and helps when refactoring code. 
 
+The downside, is that alternations to the interface may wreak havoc on the client code. For example, if you have 50 classes using one interface, and you want to add an extra abstract method, to support new functionality. As soon you add a new abstract method, all 50 classes won't compile. Your code is not backwards compatible, with this kin of change to an interface. 
 
-
-
-
+Interfaces haven't been easily extensible in the past. But Java has made some changes to the Interface type over time, which will be discussed later. 
 
 ## Interface vs Abstract Class
 

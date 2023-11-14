@@ -485,13 +485,95 @@ The downside, is that alternations to the interface may wreak havoc on the clien
 
 Interfaces haven't been easily extensible in the past. But Java has made some changes to the Interface type over time, which will be discussed later. 
 
+## JDK 8 new
+Before JDK 8, the interface type could only have public abstract methods. 
+
+JDK 8 introduced the default method, and the public static methods; JDK 9 introduced private methods, both static and non-static. 
+
+All of these new method types on the interface are concrete methods. 
+
 ## Interface vs Abstract Class
+Assume many clients use your `FlightEnabled` interface, but now you need to add a new method `FlightStages transition(FlightStages stage);` to the `FlightEnabled` interface, pre JDK 8, this means all your client's code need to change. 
 
+As of JDK 8, an Interface extension method is identified by the modifier `default`, so it's commonly known as the default method. This method is a concrete method, meaning it must have a method body, even just an empty set of curly braces. It is like a method on a superclass, because we can override it. Adding a default method doesn't break any classes currently implementing the interface. 
 
+```java
+interface FlightEnabled {
+    double MILES_TO_KM = 1.60934;
+    double KM_TO_MILES = 0.621371;
 
+    void takeOff();
+    void land();
+    void fly();
 
+    default FlightStages transition(FlightStages stage) {
+        // below statement is a common practice
+        // System.out.println("transition not implemented on " + getClass().getName());
+        // return null;
 
+        FlightStages nextStage = stage.getNextStage();
+        System.out.println("Transitioning from " + stage + " to " + nextStage);
+        return nextStage;
+    }
+}
+```
 
+"Test.java":
+```java
+package dev.lpa;
+
+public class Test {
+
+    public static void main(String[] args) {
+        inFlight(new Jet());
+    }
+
+    private static void inFlight(FlightEnabled flier) {
+        flier.takeOff();
+        flier.transition(FlightStages.LAUNCH);
+        flier.fly();
+        if (flier instanceof Trackable tracked) {
+            tracked.track();
+        }
+        flier.land();
+    }
+}
+```
+
+"Jet.java":
+```java
+package dev.lpa;
+
+public class Jet implements FlightEnabled, Trackable {
+
+    @Override
+    public void takeOff() {
+        System.out.println(getClass().getSimpleName() + " is taking off");
+    }
+
+    @Override
+    public void land() {
+        System.out.println(getClass().getSimpleName() + " is landing");
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(getClass().getSimpleName() + " is flying");
+    }
+
+    @Override
+    public void track() {
+        System.out.println(getClass().getSimpleName() + "'s coordinates recorded");
+    }
+
+    // this is new
+    @Override
+    public FlightStages transition(FlightStages stage) {
+        System.out.println(getClass().getSimpleName() + " transitioning");
+        return FlightEnabled.super.transition(stage);
+    }
+}
+```
 
 
 

@@ -492,10 +492,12 @@ JDK 8 introduced the default method, and the public static methods; JDK 9 introd
 
 All of these new method types on the interface are concrete methods. 
 
-## Interface vs Abstract Class
+## Interfaces, what's new since JDK 8
 Assume many clients use your `FlightEnabled` interface, but now you need to add a new method `FlightStages transition(FlightStages stage);` to the `FlightEnabled` interface, pre JDK 8, this means all your client's code need to change. 
 
 As of JDK 8, an Interface extension method is identified by the modifier `default`, so it's commonly known as the default method. This method is a concrete method, meaning it must have a method body, even just an empty set of curly braces. It is like a method on a superclass, because we can override it. Adding a default method doesn't break any classes currently implementing the interface. 
+
+Overriding a default method: You can choose to not override it at all; you can override the method and write code for its; you can write your own code, and invoke the method on the interface, as part of your implementation. 
 
 ```java
 interface FlightEnabled {
@@ -570,17 +572,37 @@ public class Jet implements FlightEnabled, Trackable {
     @Override
     public FlightStages transition(FlightStages stage) {
         System.out.println(getClass().getSimpleName() + " transitioning");
+        // whenever you call a default method from an overridden method, 
+        // you need to qualify super with the interface type
         return FlightEnabled.super.transition(stage);
     }
 }
 ```
 
+"Animal.java"
+```java
+enum FlightStages implements Trackable {GROUNDED, LAUNCH, CRUISE, DATA_COLLECTION;
+    @Override
+    public void track() {
+        if (this != GROUNDED) {
+            System.out.println("Monitoring " + this);
+        }
+    }
+
+    public FlightStages getNextStage() {
+        FlightStages[] allStages = values();
+        return allStages[(ordinal() + 1) % allStages.length];
+    }
+}
+```
+
+Public static, private methods.
 
 
 
 
 
-
+## Interface vs Abstract Class
 
 
 

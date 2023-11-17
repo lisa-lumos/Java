@@ -493,7 +493,7 @@ JDK 8 introduced the default method, and the public static methods; JDK 9 introd
 All of these new method types on the interface are concrete methods. 
 
 ## Interfaces, what's new since JDK 8
-Assume many clients use your `FlightEnabled` interface, but now you need to add a new method `FlightStages transition(FlightStages stage);` to the `FlightEnabled` interface, pre JDK 8, this means all your client's code need to change. 
+Assume many clients use your `FlightEnabled` interface, but now you need to add a new method `FlightStages transition(FlightStages stage);` to the `FlightEnabled` interface, pre JDK 8, this means all your client's code need to change. It is not backward compatible. 
 
 As of JDK 8, an Interface extension method is identified by the modifier `default`, so it's commonly known as the default method. This method is a concrete method, meaning it must have a method body, even just an empty set of curly braces. It is like a method on a superclass, because we can override it. Adding a default method doesn't break any classes currently implementing the interface. 
 
@@ -596,9 +596,12 @@ enum FlightStages implements Trackable {GROUNDED, LAUNCH, CRUISE, DATA_COLLECTIO
 }
 ```
 
-Public static, private methods.
+Public static methods, and private methods. Before JDK 8, an interface would often come packaged with a helper class, that provided static methods. With this change, the static methods can be included in the interface itself. Static methods don't need to specify a public access modifier, because it is implied. When you call a public static method on an interface, you must use the interface name as a qualifier. 
 
+"Animal.java":
+```java
 
+```
 
 
 

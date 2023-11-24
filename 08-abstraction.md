@@ -573,7 +573,7 @@ public class Jet implements FlightEnabled, Trackable {
     public FlightStages transition(FlightStages stage) {
         System.out.println(getClass().getSimpleName() + " transitioning");
         // whenever you call a default method from an overridden method, 
-        // you need to qualify super with the interface type
+        // you need to qualify super with the interface type, that the default method belongs to
         return FlightEnabled.super.transition(stage);
     }
 }
@@ -598,14 +598,60 @@ enum FlightStages implements Trackable {GROUNDED, LAUNCH, CRUISE, DATA_COLLECTIO
 
 Public static methods, and private methods. Before JDK 8, an interface would often come packaged with a helper class, that provided static methods. With this change, the static methods can be included in the interface itself. Static methods don't need to specify a public access modifier, because it is implied. When you call a public static method on an interface, you must use the interface name as a qualifier. 
 
+JDK 9 introduced static/non-static private methods for an interface. A private static method in a interface, can be accessed by a public static method, a default method, or a private non-static method, that lives in this interface. A private non-static method is used to support default methods, and other private methods. 
+
 "Animal.java":
 ```java
+interface OrbitEarth extends FlightEnabled {
+    void achieveOrbit();
 
+    // implicitly public, can be accessed from outside
+    static void logPublic(String description) {
+        var today = new java.util.Date();
+        System.out.println(today + ": " + description);
+    }
+
+    private static void log(String description) {
+        var today = new java.util.Date();
+        System.out.println(today + ": " + description);
+    }
+
+    private void logStage(FlightStages stage, String description) {
+        description = stage + ": " + description;
+        log(description);
+    }
+
+    @Override
+    default FlightStages transition(FlightStages stage) {
+        FlightStages nextStage = FlightEnabled.super.transition(stage);
+        logStage(stage, "Beginning Transition to " + nextStage);
+        return nextStage;
+    }
+}
 ```
 
-
-
 ## Interface vs Abstract Class
+An abstract class provides a common definition, as a base class, that multiple derived classes can share. 
 
+A best practice of coding, is Coding to an Interface. 
 
+The interface decouples the "what" form the "how", and is used to make different types behave in similar ways. 
 
+Use an interface when:
+- You expect that un-related classes will implement your interface. 
+- You want to specify the behavior of a particular data type, but you are not concerned about who implements its behavior.
+- You want to separate different behavior. 
+
+Comparison:
+| Item | Abstract Class | Interface |
+|------|----------------|-----------|
+| An instance can be created from it | No | No |
+| Has a constructor | Yes | No |
+| Implemented as part of the class hierarchy. Uses inheritance.  | Yes, in extends clause | No, in implements clause |
+| records and enums can extend or implement? | No | Yes |
+| Inherits from java.lang.Object | Yes | No |
+| Can have both abstract methods and concrete methods | Yes | Yes, as of JDK 8 |
+| Abstract methods must include abstract modifier | Yes | No. implicit.  |
+| Supports default modifier for its methods | No | Yes, as of JDK 8 |
+| Can have non-static instance fields | Yes | No |
+| Can have static fields | Yes | Yes, implicitly public static final |

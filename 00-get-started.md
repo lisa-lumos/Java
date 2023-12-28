@@ -16,37 +16,19 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.5+9-LTS-191, mixed mode, sharing)
 Using an integrated development environment (IDE) is the most commonly used method of writing Java code. 
 
 JShell: Read-Eval-Print-Loop (REPL) interactive program, a playground/sandbox that runs in a terminal, and is useful for quickly trying out new ideas:
-- reads the command or code segment we type in
-- evaluates and executes the code, and allows shortcuts to be used
-- prints out the results of the evaluation, without making the developer write code to output the results
-- loops right back for more input (code segments or commands)
+- reads the command/code the user types in
+- evaluates and executes the code, and allows for shortcuts
+- prints out the results automatically, without developer manually write code to print results
+- loops right back, for more input code/commands
 
 JShell is not an IDE, it is just a handy way to quickly get started with Java. 
 
 Java Shell user guide: `https://docs.oracle.com/en/java/javase/19/jshell/preface.html#GUID-E69066DF-2615-48B4-BD34-679C0FB67C33`. 
 
-When you want to write a couple of lines in JShell, you can wrap them in curly braces. 
+To write multiple lines in JShell, wrap them in curly braces. 
 
 ```console
 lisa@mac16 ~> jshell                                                     (base) 
-|  Welcome to JShell -- Version 17.0.5
-|  For an introduction type: /help intro
-
-jshell> /help intro
-|  
-|                                   intro
-|                                   =====
-|  
-|  The jshell tool allows you to execute Java code, getting immediate results.
-|  You can enter a Java definition (variable, method, class, etc), like:  int x = 8
-|  or a Java expression, like:  x + x
-|  or a Java statement or import.
-|  These little chunks of Java code are called 'snippets'.
-|  
-|  There are also the jshell tool commands that allow you to understand and
-|  control what you are doing, like:  /list
-|  
-|  For a list of commands: /help
 
 jshell> /help
 |  Type a Java language expression, statement, or declaration.

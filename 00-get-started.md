@@ -13,9 +13,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.5+9-LTS-191, mixed mode, sharing)
 ```
 
 ## Intro to JShell
-Using an integrated development environment (IDE) is the most commonly used method of writing Java code. 
+Using an integrated development environment (IDE), is the most commonly used method of writing Java code. 
 
-JShell: Read-Eval-Print-Loop (REPL) interactive program, a playground/sandbox that runs in a terminal, and is useful for quickly trying out new ideas:
+JShell: Read-Eval-Print-Loop (REPL) interactive program, a playground/sandbox that runs in a terminal. Useful for quickly trying out new ideas:
 - reads the command/code the user types in
 - evaluates and executes the code, and allows for shortcuts
 - prints out the results automatically, without developer manually write code to print results

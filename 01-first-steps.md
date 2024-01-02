@@ -66,7 +66,7 @@ There are 8 of them:
 
 Class allows us to build custom datatype (classes). Integer is a wrapper class (each of the 8 primitive data types has a wrapper class). 
 
-An integer wraparound event (overflow/underflow) can occur in Java when you are using expressions that are not a simple literal value. The Java compiler doesn't attempt to evaluate the expression to determine its value,  so it DOES NOT give you an error. Integer wraparound happens to byte, short, int, long data types. 
+An integer wraparound event (overflow/underflow) can occur in Java, when you are using expressions that are not a simple literal value. The Java compiler doesn't attempt to evaluate the expression to determine its value,  so it DOES NOT give you an error. Integer wraparound happens to byte, short, int, long data types. 
 
 To improve readability, Java allow to have underscore in a numeric literal, like `2_147_483_647`. 
 
@@ -130,7 +130,9 @@ jshell> long myVal = 2_147_483_647_123L; // now use the L suffix
 myVal ==> 2147483647123
 ```
 
-Note that in Java, the number 100 is an int by default. To indicate this is a different data type, need suffix such as `long myVal = 100L;`, so it is now a long type. Recommend uppercase as suffix so it is clear. A numeric literal that exceeds Integer.MAX_VALUE must use the L suffix. You cannot assign a literal that is larger than what that datatype can hold, will return an error. 
+Note that in Java, the number 100 is an int by default. To indicate this is a different data type, need suffix such as `long myVal = 100L;`, so it is now a long type. Recommend to use uppercase as suffix, so it is clear. 
+
+A numeric literal that exceeds Integer.MAX_VALUE must use the L suffix. You cannot assign a literal that is larger than what that datatype can hold, will return an error. 
 
 ## Casting in Java
 ```java

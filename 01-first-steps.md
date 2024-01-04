@@ -177,7 +177,7 @@ jshell> System.out.print("Float value range: " + Float.MIN_VALUE + " to " + Floa
 Float value range: 1.4E-45 to 3.4028235E38
 jshell> System.out.print("Double value range: " + Double.MIN_VALUE + " to " + Double.MAX_VALUE);
 Double value range: 4.9E-324 to 1.7976931348623157E308
-jshell> int myIntValue = 5; float myFloatValue = 5; double myDoubleValue = 5; // you can assign int values to float or double data types with no issue
+jshell> int myIntValue = 5; float myFloatValue = 5; double myDoubleValue = 5; // you can assign int values to float/double data types with no issue
 myIntValue ==> 5
 myFloatValue ==> 5.0
 myDoubleValue ==> 5.0
@@ -207,11 +207,11 @@ myFloatValue ==> 2.5
 jshell> myDoubleValue = 5d / 2d;
 myDoubleValue ==> 2.5
 
-jshell> myFloatValue = 5f / 3f; // 7 decimal places (the value stored in memory is actually more precise than the output which stops at 7 decimals)
+jshell> myFloatValue = 5f / 3f; // 7 decimal places (the value stored in memory is actually more precise than the output, which stops at 7 decimals)
 myFloatValue ==> 1.6666666
 
 jshell> myDoubleValue = 5d / 3d;
-myDoubleValue ==> 1.6666666666666667 // 16 decimal places (the value stored in memory is actually more precise than the output which stops at 16 decimals)
+myDoubleValue ==> 1.6666666666666667 // 16 decimal places (the value stored in memory is actually more precise than the output, which stops at 16 decimals)
 
 jshell> myDoubleValue = 5.0 / 3.0;
 myDoubleValue ==> 1.6666666666666667
@@ -228,7 +228,7 @@ jshell> myFloatValue = 5.0 / 3f; // the result is double because 5.0 is default 
 
 ```
 
-Why double? because modern computers at the chip level processes double numbers faster than its equivalent float. Also, math functions in java libraries are often written to process doubles and return double. 
+Why double? because modern computers, at the chip level, processes double numbers faster than its equivalent float. Also, math functions in java libraries are often written to process doubles and return double. 
 
 Note that when precise calculations are required, such as for currency, you should use BigDecimal class, not the float or double. 
 
